@@ -9,7 +9,6 @@ public class Pessoa {
     @SequenceGenerator(
             name="pessoa_sequence",
             allocationSize = 1,
-            initialValue = 1,
             sequenceName = "pessoa_sequence"
     )
     @GeneratedValue(
@@ -18,12 +17,13 @@ public class Pessoa {
     )
     private Long id;
     private String nome;
-    private String email; //validar e-mail
+    private String email;
     private String telefone;
     private String cpf;
-
     public String getNome() {return nome;}
     public String getCPF() {return cpf;}
+    public String getTelefone() {return telefone;}
+    public String getEmail() {return email;}
 
     public Pessoa() {
     }
@@ -32,9 +32,16 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
+
     public Pessoa(Long id, String nome, String cpf) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
+    }
+    public Boolean isEmailValid(){
+        return ValidaEmail.isValidEmailAddress(this.email);
+    }
+    public Boolean isCpfValid(){
+        return ValidaCPF.isCPF(this.cpf);
     }
 }

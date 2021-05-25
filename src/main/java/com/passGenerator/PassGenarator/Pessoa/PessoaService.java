@@ -34,6 +34,12 @@ public class PessoaService {
         if(pessoaCpf.isPresent()){
            throw  new IllegalStateException("Pessoa existente");
         }
+        if (!pessoa.isEmailValid()){
+            throw new IllegalStateException("email invalido");
+        }
+        if (!pessoa.isCpfValid()){
+            throw new IllegalStateException("CPF invalido");
+        }
         pessoaRepository.save(pessoa);
     }
 }
