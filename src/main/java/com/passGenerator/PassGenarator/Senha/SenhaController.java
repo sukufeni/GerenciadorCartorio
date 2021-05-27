@@ -34,6 +34,9 @@ public class SenhaController {
     @GetMapping("/")
     public List<Senha> index(String id) {return this.senhaService.getSenhas();}
 
+    @GetMapping("/senha/")
+    public Senha proximaSenha() {return this.senhaService.proximaSenha();}
+
     @PostMapping
     public Senha gerarSenha(@RequestBody Senha senha){
         return this.senhaService.gerarSenha(senha);

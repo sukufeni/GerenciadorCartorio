@@ -46,11 +46,19 @@ public class SenhaService {
     }
 
     public Senha proximaSenha(){
-        int posicaoProximaSenha = 1;
-        Optional<Senha> aux = Optional.ofNullable(this.repository.findAll().get(posicaoProximaSenha));
-        if(!aux.isPresent()) throw new IllegalStateException("Senha não encontrada!");
-
-        return aux.get();
+        Senha retornoSenha;
+        if(!this.filaPrioritario.isEmpty())
+        {
+            retornoSenha = this.filaPrioritario.get(this.filaPrioritario.size()-1);
+            filaPrioritario.remove(retornoSenha);
+            return retornoSenha;
+        }
+        else if(!this.filaComum.isEmpty()){
+            retornoSenha = this.filaComum.get(this.filaComum.size()-1);
+            filaComum.remove(retornoSenha);
+            return retornoSenha;
+        }
+         return null;
     }
 
     public void DeleteSenhas(){
