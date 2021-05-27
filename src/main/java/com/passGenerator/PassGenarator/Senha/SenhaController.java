@@ -1,5 +1,8 @@
 package com.passGenerator.PassGenarator.Senha;
 
+import com.passGenerator.PassGenarator.Pessoa.Pessoa;
+import com.passGenerator.PassGenarator.Pessoa.PessoaService;
+import org.hibernate.hql.internal.HolderInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,7 +20,8 @@ public class SenhaController {
     private final SenhaService senhaService;
 
     @Autowired
-    public SenhaController(SenhaService senhaService) {
+    public SenhaController(SenhaService senhaService, PessoaService pessoaService) {
+
         this.senhaService = senhaService;
     }
 
@@ -31,5 +35,7 @@ public class SenhaController {
     public List<Senha> index(String id) {return this.senhaService.getSenhas();}
 
     @PostMapping
-    public Senha gerarSenha(@RequestBody Senha senha){return this.senhaService.gerarSenha(senha);}
+    public Senha gerarSenha(@RequestBody Senha senha){
+        return this.senhaService.gerarSenha(senha);
+    }
 }

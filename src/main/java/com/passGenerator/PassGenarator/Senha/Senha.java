@@ -1,7 +1,5 @@
 package com.passGenerator.PassGenarator.Senha;
 
-import com.passGenerator.PassGenarator.Pessoa.Pessoa;
-import com.passGenerator.PassGenarator.protocolo.Protocolo;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -25,23 +23,32 @@ public class Senha {
     )
 
     private Long id;
-    private String pessoa ;
+    private String idPessoa;
     private String protocolo;
     private String cartorio;
     private Categoria categoria;
 
     public String getProtocolo() {return protocolo;}
-    public String getPessoa() {return pessoa;}
+    public String getIdPessoa() {return idPessoa;}
     public String getCartorio() {return cartorio;}
+    public Long getId(){return id;}
     public com.passGenerator.PassGenarator.Senha.Categoria getCategoria() {return categoria;}
 
     public Senha() {
+    }
+
+    public Senha(Senha senha, Long id) {
+        this.id = id;
+        this.categoria = senha.getCategoria();
+        this.cartorio = senha.getCartorio();
+        this.idPessoa = senha.getIdPessoa();
+        this.protocolo = senha.getProtocolo();
     }
 
     public Senha(String protocolo, String cartorio, Categoria categoria, String pessoa) {
         this.protocolo = protocolo;
         this.cartorio = cartorio;
         this.categoria = categoria;
-        this.pessoa = pessoa;
+        this.idPessoa = pessoa;
     }
 }
