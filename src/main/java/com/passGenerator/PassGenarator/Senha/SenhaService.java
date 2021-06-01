@@ -2,10 +2,14 @@ package com.passGenerator.PassGenarator.Senha;
 
 import com.passGenerator.PassGenarator.Pessoa.Pessoa;
 import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
+import com.passGenerator.PassGenarator.Pessoa.PessoaService;
+import com.passGenerator.PassGenarator.protocolo.Protocolo;
+import com.passGenerator.PassGenarator.protocolo.ProtocoloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,16 +19,22 @@ public class SenhaService {
 
     @Autowired
     private final SenhaRepository repository;
+
     @Autowired
-    private final PessoaRepository pessoaRepository;
+    private final PessoaService pessoaService;
+
+    @Autowired
+    private final ProtocoloService protocoloService;
+
 
     private List<Senha> filaComum = new ArrayList<Senha>();
     private List<Senha> filaPrioritario = new ArrayList<Senha>();
     private Long lastSenha = 1L;
 
-    public SenhaService(SenhaRepository repository, PessoaRepository pessoaRepository) {
-        this.pessoaRepository = pessoaRepository;
+    public SenhaService(SenhaRepository repository, PessoaService pessoaService, ProtocoloService protocoloService) {
+        this.pessoaService = pessoaService;
         this.repository = repository;
+        this.protocoloService = protocoloService;
     }
 
     public List<Senha> getSenhas() {
@@ -35,9 +45,15 @@ public class SenhaService {
     }
 
     public Senha gerarSenha(Senha senha){
+        //geração de pessoa atrelada ao protocolo/Senha
+        Pessoa aux = new Pessoa("Bruno","10525900632","brunobrandao147@gmail.com","913612296");
+        aux = pessoaService.addPessoa(aux);
 
-        Senha auxSenha = new Senha(senha,lastSenha);
+        //geração de protocoloco
+        Protocolo auxProtocolo = new Protocolo(LocalDate.now(),aux.getId(),senha.getIdCartorio(),senha.getProtocolo());
 
+        //geração de senhas
+        Senha auxSenha = new Senha(lastSenha,senha,aux.getId(), auxProtocolo.getId());
         if (!senha.getCategoria().equals(Categoria.normal)){this.filaPrioritario.add(auxSenha);}
         else{this.filaComum.add(auxSenha);}
 
@@ -49,12 +65,12 @@ public class SenhaService {
         Senha retornoSenha;
         if(!this.filaPrioritario.isEmpty())
         {
-            retornoSenha = this.filaPrioritario.get(this.filaPrioritario.size()-1);
+            retornoSenha = this.filaPrioritario.get(0);
             filaPrioritario.remove(retornoSenha);
             return retornoSenha;
         }
         else if(!this.filaComum.isEmpty()){
-            retornoSenha = this.filaComum.get(this.filaComum.size()-1);
+            retornoSenha = this.filaComum.get(0);
             filaComum.remove(retornoSenha);
             return retornoSenha;
         }

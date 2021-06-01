@@ -1,15 +1,16 @@
 package com.passGenerator.PassGenarator.protocolo;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Protocol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/protocolo")
+@RequestMapping(path = "/protocolo")
 public class ProtocoloController {
+
     private final ProtocoloService service;
 
     @Autowired
@@ -17,17 +18,22 @@ public class ProtocoloController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Protocolo> getProtocolos(){
-        return service.getProtocolos();
+
+    @GetMapping(path = "/find/{id}")
+    public ResponseEntity<Protocolo> getProtocolo(@PathVariable("id") String id){
+        Protocolo protocolo = service.getProtocolobyId(Long.parseLong(id)).get();
+        return new ResponseEntity<>(protocolo,HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{id}}")
-    public Protocolo getProtocolo(String id){
-        return  service.getProtocolos().get((int) Long.parseLong(id));
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<Protocolo>> getProtocolos(){
+        return new ResponseEntity<>(service.getProtocolos(), HttpStatus.OK) ;
     }
 
-    @PostMapping
+    @GetMapping(path = "/find/pessoa/{idPessoa}")
+    public Protocolo getProtocolobyPessoa(@PathVariable("idPessoa") String idPessoa){return  service.getProtocolos().get((int) Long.parseLong(idPessoa));}
+
+    @PostMapping(path = "/gerar")
     public Protocolo gerarProtocolo(@RequestBody Protocolo protocolo){
         return service.gerarProtocolo(protocolo);
     }

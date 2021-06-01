@@ -5,6 +5,8 @@ import com.passGenerator.PassGenarator.Pessoa.PessoaService;
 import org.hibernate.hql.internal.HolderInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.List;
 
 //@Controller
 @RestController()
+@RequestMapping(path = "/senhas")
 public class SenhaController {
     @Value("${spring.application.name}")
     String appName;
@@ -21,7 +24,6 @@ public class SenhaController {
 
     @Autowired
     public SenhaController(SenhaService senhaService, PessoaService pessoaService) {
-
         this.senhaService = senhaService;
     }
 
@@ -31,14 +33,16 @@ public class SenhaController {
 //        return "home";
 
 //    }
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<Senha> index(String id) {return this.senhaService.getSenhas();}
 
-    @GetMapping("/senha/")
-    public Senha proximaSenha() {return this.senhaService.proximaSenha();}
+    @GetMapping("/proximasenha")
+    public ResponseEntity<Senha> proximaSenha() {
+        return new ResponseEntity<>(this.senhaService.proximaSenha(), HttpStatus.OK);
+    }
 
-    @PostMapping
-    public Senha gerarSenha(@RequestBody Senha senha){
-        return this.senhaService.gerarSenha(senha);
+    @PostMapping("/gerar")
+    public ResponseEntity<Senha> gerarSenha(@RequestBody Senha senha){
+        return new ResponseEntity<>(this.senhaService.gerarSenha(senha),HttpStatus.CREATED);
     }
 }

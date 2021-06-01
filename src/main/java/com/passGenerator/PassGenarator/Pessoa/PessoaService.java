@@ -23,23 +23,20 @@ public class PessoaService {
 
     public Optional<Pessoa> getPessoaByCpf(String cpf){
         Optional<Pessoa> pessoaCpf = pessoaRepository.findByCpf(cpf);
-        if(pessoaCpf.isPresent()){
-            throw  new IllegalStateException("Pessoa existente");
-        }
         return pessoaCpf;
     }
 
-    public void addPessoa(Pessoa pessoa) {
+    public Pessoa addPessoa(Pessoa pessoa) {
         Optional<Pessoa> pessoaCpf = pessoaRepository.findByCpf(pessoa.getCPF());
         if(pessoaCpf.isPresent()){
-           throw  new IllegalStateException("Pessoa existente");
+           return pessoaCpf.get();
         }
         if (!pessoa.isEmailValid()){
-            throw new IllegalStateException("email invalido");
+            throw new IllegalStateException("e-mail invalido");
         }
         if (!pessoa.isCpfValid()){
             throw new IllegalStateException("CPF invalido");
         }
-        pessoaRepository.save(pessoa);
+        return pessoaRepository.save(pessoa);
     }
 }

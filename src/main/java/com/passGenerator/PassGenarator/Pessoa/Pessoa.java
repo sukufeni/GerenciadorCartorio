@@ -1,10 +1,11 @@
 package com.passGenerator.PassGenarator.Pessoa;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
-public class Pessoa {
+public class Pessoa implements Serializable {
     @Id
     @SequenceGenerator(
             name="pessoa_sequence",
@@ -20,9 +21,11 @@ public class Pessoa {
     private String email;
     private String telefone;
     private String cpf;
+
     public String getNome() {return nome;}
     public String getCPF() {return cpf;}
     public String getTelefone() {return telefone;}
+    public Long getId() {return id;}
     public String getEmail() {return email;}
 
     public Pessoa() {
@@ -32,6 +35,12 @@ public class Pessoa {
         this.cpf = cpf;
     }
 
+    public Pessoa(String nome, String cpf, String email, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.cpf = cpf;
+    }
 
     public Pessoa(Long id, String nome, String cpf) {
         this.id = id;

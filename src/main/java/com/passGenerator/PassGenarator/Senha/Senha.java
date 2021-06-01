@@ -1,13 +1,15 @@
 package com.passGenerator.PassGenarator.Senha;
 
+import com.passGenerator.PassGenarator.Pessoa.Pessoa;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
 
-public class Senha {
+public class Senha implements Serializable {
 
     @javax.persistence.Id
     @Id
@@ -23,32 +25,32 @@ public class Senha {
     )
 
     private Long id;
-    private String idPessoa;
+    private Long idPessoa;
     private String protocolo;
-    private String cartorio;
+    private Long idCartorio;
     private Categoria categoria;
 
     public String getProtocolo() {return protocolo;}
-    public String getIdPessoa() {return idPessoa;}
-    public String getCartorio() {return cartorio;}
+    public Long getIdPessoa() {return idPessoa;}
+    public Long getIdCartorio() {return idCartorio;}
     public Long getId(){return id;}
     public com.passGenerator.PassGenarator.Senha.Categoria getCategoria() {return categoria;}
 
     public Senha() {
     }
 
-    public Senha(Senha senha, Long id) {
+    public Senha(Long id, Senha senha, Long idPessoa, Long idProtocolo) {
         this.id = id;
         this.categoria = senha.getCategoria();
-        this.cartorio = senha.getCartorio();
-        this.idPessoa = senha.getIdPessoa();
+        this.idCartorio = senha.getIdCartorio();
+        this.idPessoa = idPessoa;
         this.protocolo = senha.getProtocolo();
     }
 
-    public Senha(String protocolo, String cartorio, Categoria categoria, String pessoa) {
+    public Senha(String protocolo, Long idCartorio, Categoria categoria, Long idPessoa) {
         this.protocolo = protocolo;
-        this.cartorio = cartorio;
+        this.idCartorio = idCartorio;
         this.categoria = categoria;
-        this.idPessoa = pessoa;
+        this.idPessoa = idPessoa;
     }
 }
