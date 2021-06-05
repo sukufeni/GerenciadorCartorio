@@ -10,21 +10,33 @@ public class Cartorio {
 
     @Id
     private Long id;
-    private String nomeCartorio;
-    private String IdentificacaoCartorio;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNomeCartorio() {
+        return nomeCartorio;
+    }
+
+    public String getCodigoCartorio() {
+        return codigoCartorio;
+    }
+
+    private String nomeCartorio;
+    private String codigoCartorio;
 
     public Cartorio() {
     }
 
-    public Cartorio(String nomeCartorio, String identificacaoCartorio) {
+    public Cartorio(String nomeCartorio, String codigoCartorio) {
         this.nomeCartorio = nomeCartorio;
-        IdentificacaoCartorio = identificacaoCartorio;
+        codigoCartorio = codigoCartorio;
     }
 
-    public Cartorio(Long id, String nomeCartorio, String identificacaoCartorio) {
+    public Cartorio(Long id, String nomeCartorio, String codigoCartorio) {
         this.id = id;
         this.nomeCartorio = nomeCartorio;
-        IdentificacaoCartorio = identificacaoCartorio;
+        codigoCartorio = codigoCartorio;
     }
 }

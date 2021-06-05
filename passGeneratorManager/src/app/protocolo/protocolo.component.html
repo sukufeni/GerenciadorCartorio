@@ -1,6 +1,36 @@
-<div>Protocolo</div>
-<div *ngFor="let protocolo of protocolos">
-<div>{{protocolo.id}}</div>
-  <div>{{protocolo.qualidadeProtocolo}}</div>
-  <div>{{protocolo.titularProtocolo}}</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<div><br></div>
+<div class="container" id="main-container">
+  <div  class="row">
+    <div *ngFor="let protocolo of protocolos" class="col-md-6 col-xl-3">
+      <div class="card m-b-30">
+        <div class="card-body row">
+          <div class="col-6">
+            <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                class="img-fluid rounded-circle w-60"></a>
+          </div>
+          <div class="col-6 card-title align-self-center mb-0">
+            <h5>{{protocolo?.id}}</h5>
+            <p class="m-0">{{protocolo?.qualidadeProtocolo}}</p>
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><p>Cartorio: {{protocolo?.cartorio}}</p></li>
+          <li class="list-group-item"><p>Titular: {{protocolo?.titularProtocolo}}</p></li>
+          <li class="list-group-item"><p>Data Criação: {{protocolo?.dataCriacao}}</p></li>
+          <li class="list-group-item"><p>Data Vencimento: {{protocolo?.dataEntrega}}</p></li>
+        </ul>
+        <div class="card-body">
+          <div class="float-right btn-group btn-group-sm">
+            <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip"
+              data-original-title="Edit"><i class="fa fa-pencil"></i>Editar </a>
+            <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip"
+              data-original-title="Delete"><i class="fa fa-times"></i>Apagar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

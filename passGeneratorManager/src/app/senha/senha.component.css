@@ -27,7 +27,7 @@ h6 {
   -webkit-border-radius: 50%;
   background-color: rgba(89, 206, 181, 0.85);
   border-radius: 50%;
-  color: #ffffff;
+  color: #b3ccff;
   display: inline-block;
   height: 30px;
   line-height: 30px;
@@ -36,5 +36,5 @@ h6 {
   font-size: 12px;
 }
 a {
-  color: #707070;
+  color: #ffffff;
 }

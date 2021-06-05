@@ -4,7 +4,7 @@
 <div><br></div>
 <div class="container" id="main-container">
   <div  class="row">
-    <div *ngFor="let pessoa of pessoas" class="col-md-6 col-xl-3">
+    <div *ngFor="let senha of senhas" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
           <div class="col-6">
@@ -12,13 +12,13 @@
                 class="img-fluid rounded-circle w-60"></a>
           </div>
           <div class="col-6 card-title align-self-center mb-0">
-            <h5>{{pessoa?.id}}</h5>
-            <p class="m-0">Nome: {{pessoa?.nome}}</p>
+            <h5>{{senha?.id}}</h5>
+            <p class="m-0">Nome: {{senha?.idPessoa}}</p>
           </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><p>cpf: {{pessoa?.cpf}}</p></li>
-          <li class="list-group-item"><p>Telefone: {{pessoa?.telefone}}</p></li>
+          <li class="list-group-item"><p>Categoria: {{senha?.categoria}}</p></li>
+          <li class="list-group-item"><p>Protocolo: {{senha?.protocolo}}</p></li>
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">

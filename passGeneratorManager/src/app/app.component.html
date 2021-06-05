@@ -1,6 +1,29 @@
-<h1>{{title}}</h1>
-<nav>
-  <a [routerLink]='["/protocolo"]' routerLinkActive="active">Gerenciar Protocolos</a>
-  <a [routerLink]='["/pessoa"]' routerLinkActive="active">pessoa</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" style="color:white;">Gerenciador de Senhas e Protocolos</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+    aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <div class="navbar-brand"><a [routerLink]='["/protocolo"]' routerLinkActive="active">Gerenciar Protocolos</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <div class="navbar-brand"><a [routerLink]='["/pessoa"]' routerLinkActive="active"> Gerenciar pessoas</a></div>
+      </li>
+      <li class="nav-item active">
+        <div class="navbar-brand"><a [routerLink]='["/senha"]' routerLinkActive="active">Gerar senha</a></div>
+      </li>
+    </ul>
+  </div>
 </nav>
-<router-outlet></router-outlet>
+
+<body style="background-color: lightslategray;">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+  <router-outlet></router-outlet>
+</body>
