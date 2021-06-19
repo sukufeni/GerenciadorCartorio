@@ -46,7 +46,7 @@ public class SenhaService {
 
     public Senha gerarSenha(Senha senha){
         //geração de senhas
-        Senha auxSenha = new Senha(lastSenha,senha,senha.getIdPessoa(), senha.getProtocolo());
+        Senha auxSenha = new Senha(lastSenha,senha,senha.getIdPessoa(), senha.getidProtocolo());
         if (!senha.getCategoria().equals(Categoria.normal)){this.filaPrioritario.add(auxSenha);}
         else{this.filaComum.add(auxSenha);}
 

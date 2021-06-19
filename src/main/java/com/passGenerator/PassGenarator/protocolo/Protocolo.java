@@ -32,8 +32,8 @@ public class Protocolo implements Serializable {
     private LocalDate dataCriacao;
     private LocalDate dataEntrega;
     private String qualidadeProtocolo;
-    private long cartorio; // Deve ser a classe Cartorio no fim.
-    private Long titularProtocolo; // Deve ser a classe Pessoa no fim.
+    private long cartorio; 
+    private Long titularProtocolo;
 
     public LocalDate getDataCriacao() {return dataCriacao;}
     public LocalDate getDataEntrega() {return dataEntrega;}
@@ -43,11 +43,11 @@ public class Protocolo implements Serializable {
 
     public Protocolo() {}
 
-    public Protocolo(Protocolo entrada){
+    public Protocolo(Protocolo entrada,Long cartorio){
         this.dataCriacao = LocalDate.now();
         this.dataEntrega = entrada.dataEntrega;
         this.titularProtocolo = entrada.getTitularProtocolo();
-        this.cartorio = entrada.getCartorio();
+        this.cartorio = cartorio;
         this.qualidadeProtocolo = entrada.qualidadeProtocolo;
     }
 
@@ -56,6 +56,6 @@ public class Protocolo implements Serializable {
         this.dataEntrega = dataEntrega;
         this.titularProtocolo = titularProtocolo;
         this.cartorio = cartorio;
-        this.qualidadeProtocolo= qualidadeProtocolo;
+        this.qualidadeProtocolo = qualidadeProtocolo;
     }
 }

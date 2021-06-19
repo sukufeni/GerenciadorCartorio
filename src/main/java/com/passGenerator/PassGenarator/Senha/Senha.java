@@ -30,7 +30,7 @@ public class Senha implements Serializable {
     private Long idCartorio;
     private Categoria categoria;
 
-    public Long getProtocolo() {return idProtocolo;}
+    public Long getidProtocolo() {return idProtocolo;}
     public Long getIdPessoa() {return idPessoa;}
     public Long getIdCartorio() {return idCartorio;}
     public Long getId(){return id;}
@@ -44,12 +44,12 @@ public class Senha implements Serializable {
         this.categoria = senha.getCategoria();
         this.idCartorio = senha.getIdCartorio();
         this.idPessoa = idPessoa;
-        this.idProtocolo = senha.getProtocolo();
+        this.idProtocolo = idProtocolo;
     }
 
     public Senha(Long idProtocolo, Long idCartorio, Categoria categoria, Long idPessoa) {
         this.idProtocolo = idProtocolo;
-        this.idCartorio = idCartorio; //resolve
+        this.idCartorio = idCartorio;
         this.categoria = categoria;
         this.idPessoa = idPessoa;
     }

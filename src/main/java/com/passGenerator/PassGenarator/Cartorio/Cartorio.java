@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import antlr.collections.List;
+import com.passGenerator.PassGenarator.protocolo.TipoProtocolo;
+
 @Entity
 @Table
 public class Cartorio {

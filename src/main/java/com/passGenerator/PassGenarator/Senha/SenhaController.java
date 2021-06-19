@@ -27,12 +27,7 @@ public class SenhaController {
         this.senhaService = senhaService;
     }
 
-//    @GetMapping("/")
-//    public String homePage(Model model) {
-//        model.addAttribute("appName", appName);
-//        return "home";
 
-//    }
     @GetMapping("/all")
     public List<Senha> index(String id) {return this.senhaService.getSenhas();}
 

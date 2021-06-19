@@ -18,7 +18,7 @@
           </div>
           <div class="col-6 card-title align-self-center mb-0">
             <h5>{{senha?.id}}</h5>
-            <p class="m-0">Nome: {{senha?.idPessoa}}</p>
+            <p class="m-0">Nome: {{senha?.pessoa?.nome}}</p>
           </div>
         </div>
         <ul class="list-group list-group-flush">
@@ -26,7 +26,7 @@
             <p>Categoria: {{senha?.categoria}}</p>
           </li>
           <li class="list-group-item">
-            <p>Protocolo: {{senha?.protocolo}}</p>
+            <p>Protocolo: {{senha?.protocolo?.qualidadeProtocolo}}</p>
           </li>
         </ul>
         <div class="card-body">
@@ -87,9 +87,9 @@
                 placeholder="Qualidade Protocolo" required>
             </div>
             <div class="form-group">
-              <label for="date">Validade Protocolo</label>
-              <input type="date" ngModel name="ValidadeProtocolo" class="form-control" id="ValidadeProtocolo"
-                placeholder="ValidadeProtocolo" required>
+              <label for="date">Data Entrega Protocolo</label>
+              <input type="date" ngModel name="dataEntrega" class="form-control" id="dataEntrega"
+                placeholder="dataEntrega" required>
             </div>
             <div class="modal-footer">
               <button type="button" id="add-pessoa-form" class="btn btn-secondary" data-dismiss="modal">fechar</button>

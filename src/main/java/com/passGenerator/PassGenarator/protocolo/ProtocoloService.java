@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,14 @@ public class ProtocoloService {
     }
 
     public Protocolo gerarProtocolo(Protocolo protocolo){
-        Protocolo auxProtocolo = new Protocolo(protocolo);
+        Long idCartorio= -1L;
+        for (Map<String,Long> curr : TipoProtocolo.tipoProtocolo) {
+            if(curr.containsKey(protocolo.getQualidadeProtocolo())){
+                idCartorio = curr.get(protocolo.getQualidadeProtocolo());
+                break;
+            }
+        }
+        Protocolo auxProtocolo = new Protocolo(protocolo,idCartorio);
         return this.repository.save(auxProtocolo);
     }
     public Protocolo getProtocoloByPessoa(String idPessoa){

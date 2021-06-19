@@ -23,8 +23,13 @@ export class ProtocoloService {
     return this.http.get<Protocolo[]>(environment.apiBaseUrl+"protocolo/all");
   }
 
-  public gerarProtocolo(protocolo:Protocolo):Observable<Protocolo>{
-    return this.http.post<Protocolo>(environment.apiBaseUrl+"/protocolo/gerar",protocolo);
+  public gerarProtocolo(protocolo:Protocolo, idTitular: Number):Observable<Protocolo>{
+    var auxProtocolo= {
+      titularProtocolo : idTitular,
+      dataEntrega : protocolo.dataEntrega,
+      qualidadeProtocolo : protocolo.qualidadeProtocolo
+    }
+    return this.http.post<Protocolo>(environment.apiBaseUrl+"/protocolo/gerar",auxProtocolo);
   }
 
 }

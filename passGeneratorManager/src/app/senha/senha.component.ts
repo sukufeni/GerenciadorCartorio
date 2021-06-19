@@ -3,6 +3,8 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Pessoa } from '../pessoa/Pessoa';
 import { PessoaService } from '../pessoa/pessoa.service';
+import { Protocolo } from '../protocolo/Protocolo';
+import { ProtocoloService } from '../protocolo/protocolo.service';
 import { Senha } from './Senha';
 import { SenhaService } from './senha.service';
 
@@ -16,9 +18,11 @@ export class SenhaComponent implements OnInit {
   public senha!: Senha;
   public pessoas: Pessoa[] = [];
   public pessoa!: Pessoa;
+  public protocolo!: Protocolo;
   private idPessoa: Number = -1;
+  private idProtocolo: Number = -1;
 
-  constructor(private senhaService: SenhaService, private pessoaService: PessoaService) { }
+  constructor(private senhaService: SenhaService, private pessoaService: PessoaService, private protocoloService: ProtocoloService) { }
 
   ngOnInit() {
     this.getSenhas();
@@ -29,7 +33,9 @@ export class SenhaComponent implements OnInit {
         this.senhas = response;
         this.senhas.forEach(element => {
           this.getPessoa(element.idPessoa);
+          this.getProtocolo(Number(element.idProtocolo));
           element.pessoa = this.pessoa;
+          element.protocolo = this.protocolo;
         });
       },
       (error: HttpErrorResponse) => {
@@ -48,12 +54,20 @@ export class SenhaComponent implements OnInit {
   }
 
   public gerarSenha(senha: NgForm): void {
-    this.pessoaService.gerarPessoa(senha.value).subscribe((response: Pessoa) => {
-      this.idPessoa = response.id;
-      this.senhaService.gerarSenha(senha.value, this.idPessoa).subscribe(
-        (response: Senha) => {
-          this.senha = response;
-          window.location.reload();
+    this.pessoaService.gerarPessoa(senha.value).subscribe((responsePessoa: Pessoa) => {
+      this.idPessoa = responsePessoa.id;
+      this.protocoloService.gerarProtocolo(senha.value, this.idPessoa).subscribe(
+        (responseProtocolo: Protocolo) => {
+          this.idProtocolo = responseProtocolo.id;
+          this.senhaService.gerarSenha(senha.value, this.idPessoa, this.idProtocolo).subscribe(
+            (response: Senha) => {
+              this.senha = response;
+              window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message)
+            }
+          );
         },
         (error: HttpErrorResponse) => {
           alert(error.message)
@@ -67,7 +81,17 @@ export class SenhaComponent implements OnInit {
 
   private getPessoa(id: number): void {
     this.pessoaService.getPessoa(id).subscribe(
-      (response: Pessoa) => { this.pessoa = response; },
+      (response: Pessoa) => { 
+        this.pessoa = response; 
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    );
+  }
+  private getProtocolo(id: number): void {
+    this.protocoloService.getProtocolobyId(id).subscribe(
+      (response: Protocolo) => { this.protocolo = response; },
       (error: HttpErrorResponse) => {
         alert(error.message)
       }
