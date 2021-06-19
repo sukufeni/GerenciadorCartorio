@@ -50,20 +50,19 @@ export class SenhaComponent implements OnInit {
   public gerarSenha(senha: NgForm): void {
     this.pessoaService.gerarPessoa(senha.value).subscribe((response: Pessoa) => {
       this.idPessoa = response.id;
+      this.senhaService.gerarSenha(senha.value, this.idPessoa).subscribe(
+        (response: Senha) => {
+          this.senha = response;
+          window.location.reload();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
     },
       (error: HttpErrorResponse) => {
         alert(error.message)
       });
-
-    this.senhaService.gerarSenha(senha.value, this.idPessoa).subscribe(
-      (response: Senha) => {
-        this.senha = response;
-        window.location.reload();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
   }
 
   private getPessoa(id: number): void {
