@@ -26,11 +26,11 @@ public class Senha implements Serializable {
 
     private Long id;
     private Long idPessoa;
-    private String protocolo;
+    private Long idProtocolo;
     private Long idCartorio;
     private Categoria categoria;
 
-    public String getProtocolo() {return protocolo;}
+    public Long getProtocolo() {return idProtocolo;}
     public Long getIdPessoa() {return idPessoa;}
     public Long getIdCartorio() {return idCartorio;}
     public Long getId(){return id;}
@@ -44,12 +44,12 @@ public class Senha implements Serializable {
         this.categoria = senha.getCategoria();
         this.idCartorio = senha.getIdCartorio();
         this.idPessoa = idPessoa;
-        this.protocolo = senha.getProtocolo();
+        this.idProtocolo = senha.getProtocolo();
     }
 
-    public Senha(String protocolo, Long idCartorio, Categoria categoria, Long idPessoa) {
-        this.protocolo = protocolo;
-        this.idCartorio = idCartorio;
+    public Senha(Long idProtocolo, Long idCartorio, Categoria categoria, Long idPessoa) {
+        this.idProtocolo = idProtocolo;
+        this.idCartorio = idCartorio; //resolve
         this.categoria = categoria;
         this.idPessoa = idPessoa;
     }

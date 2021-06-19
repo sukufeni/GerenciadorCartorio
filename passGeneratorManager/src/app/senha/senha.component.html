@@ -1,9 +1,14 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <button class="nav-link" (click)="onModalOpen(null,'add')">Gerar Senha</button>
+  </div>
+</nav>
 <div><br></div>
 <div class="container" id="main-container">
-  <div  class="row">
+  <div class="row">
     <div *ngFor="let senha of senhas" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
@@ -17,8 +22,12 @@
           </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><p>Categoria: {{senha?.categoria}}</p></li>
-          <li class="list-group-item"><p>Protocolo: {{senha?.protocolo}}</p></li>
+          <li class="list-group-item">
+            <p>Categoria: {{senha?.categoria}}</p>
+          </li>
+          <li class="list-group-item">
+            <p>Protocolo: {{senha?.protocolo}}</p>
+          </li>
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">
@@ -27,6 +36,66 @@
             <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip"
               data-original-title="Delete"><i class="fa fa-times"></i>Apagar</a>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Gerar Senha Modal -->
+  <div class="modal fade" id="addSenhaModal" tabindex="-1" role="dialog" aria-labelledby="addSenhaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSenhaModalLabel">Gerar Senha</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="gerarSenha(addForm)">
+            <div class="form-group">
+              <label for="name">Pessoa</label>
+            </div>
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input type="text" ngModel name="nome" class="form-control" id="nome" placeholder="Nome" required>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">CPF</label>
+              <input type="text" ngModel name="cpf" class="form-control" id="cpf" placeholder="CPF" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Telefone</label>
+              <input type="text" ngModel name="telefone" class="form-control" id="telefone" placeholder="Telefone"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Categoria</label>
+              <input type="text" ngModel name="categoria" class="form-control" id="categoria" placeholder="categoria"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">Protocolo</label>
+            </div>
+            <div class="form-group">
+              <label for="name">Qualidade Protocolo</label>
+              <input type="text" ngModel name="qualidadeProtocolo" class="form-control" id="qualidadeProtocolo"
+                placeholder="Qualidade Protocolo" required>
+            </div>
+            <div class="form-group">
+              <label for="date">Validade Protocolo</label>
+              <input type="date" ngModel name="ValidadeProtocolo" class="form-control" id="ValidadeProtocolo"
+                placeholder="ValidadeProtocolo" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-pessoa-form" class="btn btn-secondary" data-dismiss="modal">fechar</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Gerar Senha</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -11,4 +11,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
 
     @Query("SELECT s FROM Pessoa s WHERE s.cpf = ?1")
     Optional<Pessoa> findByCpf(String cpf);
+    Optional<Pessoa> findById(Long id);
 }

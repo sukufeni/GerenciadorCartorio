@@ -45,15 +45,8 @@ public class SenhaService {
     }
 
     public Senha gerarSenha(Senha senha){
-        //geração de pessoa atrelada ao protocolo/Senha
-        Pessoa aux = new Pessoa("Bruno","10525900632","brunobrandao147@gmail.com","913612296");
-        aux = pessoaService.addPessoa(aux);
-
-        //geração de protocoloco
-        Protocolo auxProtocolo = new Protocolo(LocalDate.now(),aux.getId(),senha.getIdCartorio(),senha.getProtocolo());
-
         //geração de senhas
-        Senha auxSenha = new Senha(lastSenha,senha,aux.getId(), auxProtocolo.getId());
+        Senha auxSenha = new Senha(lastSenha,senha,senha.getIdPessoa(), senha.getProtocolo());
         if (!senha.getCategoria().equals(Categoria.normal)){this.filaPrioritario.add(auxSenha);}
         else{this.filaComum.add(auxSenha);}
 

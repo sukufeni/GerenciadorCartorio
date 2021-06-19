@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,8 +17,14 @@ export class SenhaService {
     return this.http.get<Senha>(this.url + "/proximaSenha");
   }
 
-  public gerarSenha(senha: Senha): Observable<Senha> {
-    return this.http.post<Senha>(this.url + "/gerar", senha);
+  public gerarSenha(senha: Senha, idPessoa: Number): Observable<Senha> {
+    var auxSenha = {
+      categoria: senha.categoria,
+      idPessoa: idPessoa,
+      idProtocolo: senha.protocolo,
+      idCartorio: senha.idCartorio
+    }
+    return this.http.post<Senha>(this.url + "/gerar", auxSenha);
   }
 
   public getSenhas(): Observable<Senha[]> {

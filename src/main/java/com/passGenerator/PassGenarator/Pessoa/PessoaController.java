@@ -24,16 +24,23 @@ public class PessoaController {
     public ResponseEntity<List<Pessoa>> getPessoas(){
         return new ResponseEntity<>(this.service.GetPessoas(),HttpStatus.OK);
     }
-    @GetMapping(path = "/find/{cpf}")
+    @GetMapping(path = "/find/cpf/{cpf}")
     public ResponseEntity<Pessoa> getPessoaByCPF(@PathVariable("cpf")String cpf){
         Optional<Pessoa> auxPessoa = this.service.getPessoaByCpf(cpf);
         if(auxPessoa.isPresent())return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
         else return new ResponseEntity <>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping(path = "/find/{id}")
+    public ResponseEntity<Pessoa> getPessoabyId(@PathVariable("id")Long id){
+        Optional<Pessoa> auxPessoa = this.service.GetPessoa(id);
+        if(auxPessoa.isPresent()) return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping(path = "/gerar")
     public ResponseEntity<Pessoa> AddPessoa(@RequestBody Pessoa pessoa){
-        this.service.addPessoa(pessoa);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Pessoa auxPessoa= this.service.addPessoa(pessoa);
+        return new ResponseEntity<>(auxPessoa, HttpStatus.OK);
     }
 }
