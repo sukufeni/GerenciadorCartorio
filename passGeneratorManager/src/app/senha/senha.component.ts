@@ -21,12 +21,27 @@ export class SenhaComponent implements OnInit {
   public protocolo!: Protocolo;
   private idPessoa: Number = -1;
   private idProtocolo: Number = -1;
+  public TipoProtocolos: any[]=[];
 
   constructor(private senhaService: SenhaService, private pessoaService: PessoaService, private protocoloService: ProtocoloService) { }
 
   ngOnInit() {
     this.getSenhas();
+    this.getTipoProtocolos();
   }
+
+  public getTipoProtocolos(): void {
+    this.protocoloService.getTipoProtocolos().subscribe(
+      (response:Map<String,Number>[])=>{
+        this.TipoProtocolos=response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    )
+  }
+
+
   public getSenhas(): void {
     this.senhaService.getSenhas().subscribe(
       (response: Senha[]) => {

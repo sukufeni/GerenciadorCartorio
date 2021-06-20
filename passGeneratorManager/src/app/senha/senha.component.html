@@ -3,7 +3,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="collapse navbar-collapse" id="navbarColor02">
-     <button class="nav-link" (click)="onModalOpen(null,'add')">Gerar Senha</button>
+    <button class="nav-link" (click)="onModalOpen(null,'add')">Gerar Senha</button>
   </div>
 </nav>
 <div><br></div>
@@ -12,10 +12,6 @@
     <div *ngFor="let senha of senhas" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
-          <div class="col-6">
-            <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
-                class="img-fluid rounded-circle w-60"></a>
-          </div>
           <div class="col-6 card-title align-self-center mb-0">
             <h5>{{senha?.id}}</h5>
             <p class="m-0">Nome: {{senha?.pessoa?.nome}}</p>
@@ -75,16 +71,24 @@
             </div>
             <div class="form-group">
               <label for="phone">Categoria</label>
-              <input type="text" ngModel name="categoria" class="form-control" id="categoria" placeholder="categoria"
-                required>
+              <select class="custom-select" name="categoria" id="categoria" ngModel="categoria" required>
+                <option value="idoso">Idoso</option>
+                <option value="gestante">Gestante</option>
+                <option value="normal">Normal</option>
+                <option value="deficiente">Deficiente</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="name">Protocolo</label>
             </div>
+
             <div class="form-group">
               <label for="name">Qualidade Protocolo</label>
-              <input type="text" ngModel name="qualidadeProtocolo" class="form-control" id="qualidadeProtocolo"
-                placeholder="Qualidade Protocolo" required>
+              <select class="custom-select" name="qualidadeProtocolo" id="qualidadeProtocolo" ngModel="qualidadeProtocolo">
+                <option value="" disabled>Qualidade:</option>
+                <option *ngFor="let tipoProtocolo of TipoProtocolos" [ngValue]="tipoProtocolo" required>{{tipoProtocolo}}
+                </option>
+              </select>
             </div>
             <div class="form-group">
               <label for="date">Data Entrega Protocolo</label>

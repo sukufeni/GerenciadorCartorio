@@ -4,6 +4,7 @@ import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,33 +22,47 @@ public class ProtocoloService {
         this.pessoaRepository = pessoaRepository;
     }
 
-    public List<Protocolo> getProtocolos(){
+    public List<Protocolo> getProtocolos() {
         return this.repository.findAll();
     }
-    public Optional<Protocolo> getProtocolobyId(Long id){
+
+    public Optional<Protocolo> getProtocolobyId(Long id) {
         return this.repository.findProtocoloById(id);
     }
 
-    public Protocolo gerarProtocolo(Protocolo protocolo){
-        Long idCartorio= -1L;
-        for (Map<String,Long> curr : TipoProtocolo.tipoProtocolo) {
-            if(curr.containsKey(protocolo.getQualidadeProtocolo())){
+    public List<String> getTipoProtocolos() {
+        List<String> auxKeysProtocolos = new ArrayList<String>();
+        for (Map<String, Long> iterable : TipoProtocolo.tipoProtocolo) {
+            for (String keyString : iterable.keySet()) {
+                auxKeysProtocolos.add(keyString);
+            }
+        }
+        return auxKeysProtocolos;
+    }
+
+    public Protocolo gerarProtocolo(Protocolo protocolo) {
+        Long idCartorio = -1L;
+        for (Map<String, Long> curr : TipoProtocolo.tipoProtocolo) {
+            if (curr.containsKey(protocolo.getQualidadeProtocolo())) {
                 idCartorio = curr.get(protocolo.getQualidadeProtocolo());
                 break;
             }
         }
-        Protocolo auxProtocolo = new Protocolo(protocolo,idCartorio);
+        Protocolo auxProtocolo = new Protocolo(protocolo, idCartorio);
         return this.repository.save(auxProtocolo);
     }
-    public Protocolo getProtocoloByPessoa(String idPessoa){
+
+    public Protocolo getProtocoloByPessoa(String idPessoa) {
         Optional<Protocolo> protocolo = this.repository.findProtocoloByTitularProtocolo(idPessoa);
-        if(!protocolo.isPresent()) throw  new IllegalStateException("Protocolo não encontrado!");
+        if (!protocolo.isPresent())
+            throw new IllegalStateException("Protocolo não encontrado!");
         return protocolo.get();
     }
 
-    public Protocolo getProtocoloByQualidade(String qualidadeProtocolo){
+    public Protocolo getProtocoloByQualidade(String qualidadeProtocolo) {
         Optional<Protocolo> protocolo = this.repository.findProtocoloByQualidadeProtocolo(qualidadeProtocolo);
-        if(!protocolo.isPresent()) throw  new IllegalStateException("Protocolo não encontrado!");
+        if (!protocolo.isPresent())
+            throw new IllegalStateException("Protocolo não encontrado!");
         return protocolo.get();
     }
 }

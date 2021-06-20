@@ -27,7 +27,6 @@ public class SenhaController {
         this.senhaService = senhaService;
     }
 
-
     @GetMapping("/all")
     public List<Senha> index(String id) {return this.senhaService.getSenhas();}
 

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/protocolo")
@@ -32,6 +33,11 @@ public class ProtocoloController {
     @GetMapping(path = "/find/pessoa/{idPessoa}")
     public Protocolo getProtocolobyPessoa(@PathVariable("idPessoa") String idPessoa) {
         return service.getProtocolos().get((int) Long.parseLong(idPessoa));
+    }
+
+    @GetMapping(path = "/tipos")
+    public ResponseEntity<List<String>> getTipoProtocolos(){
+        return new ResponseEntity<>(this.service.getTipoProtocolos(),HttpStatus.OK);
     }
 
     @PostMapping(path = "/gerar")
