@@ -5,4 +5,5 @@ export interface Protocolo{
   titularProtocolo: number;
   dataCriacao: Date;
   dataEntrega: Date;
+  nomeTitular: string;
 }

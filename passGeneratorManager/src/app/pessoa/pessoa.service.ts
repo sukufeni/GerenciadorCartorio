@@ -22,7 +22,6 @@ export class PessoaService {
       email: pessoa.email,
       telefone: pessoa.telefone
     }
-    console.log(environment.apiBaseUrl + "/pessoa/gerar");
     return this.http.post<Pessoa>(environment.apiBaseUrl + "pessoa/gerar", auxPessoa);
   }
 }

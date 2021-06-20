@@ -19,9 +19,9 @@ export class SenhaComponent implements OnInit {
   public pessoas: Pessoa[] = [];
   public pessoa!: Pessoa;
   public protocolo!: Protocolo;
-  private idPessoa: Number = -1;
-  private idProtocolo: Number = -1;
-  public TipoProtocolos: any[]=[];
+  private idPessoa: number = -1;
+  private idProtocolo: number = -1;
+  public TipoProtocolos: any[] = [];
 
   constructor(private senhaService: SenhaService, private pessoaService: PessoaService, private protocoloService: ProtocoloService) { }
 
@@ -32,15 +32,14 @@ export class SenhaComponent implements OnInit {
 
   public getTipoProtocolos(): void {
     this.protocoloService.getTipoProtocolos().subscribe(
-      (response:Map<String,Number>[])=>{
-        this.TipoProtocolos=response;
+      (response: Map<String, Number>[]) => {
+        this.TipoProtocolos = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
       }
     )
   }
-
 
   public getSenhas(): void {
     this.senhaService.getSenhas().subscribe(
@@ -96,8 +95,8 @@ export class SenhaComponent implements OnInit {
 
   private getPessoa(id: number): void {
     this.pessoaService.getPessoa(id).subscribe(
-      (response: Pessoa) => { 
-        this.pessoa = response; 
+      (response: Pessoa) => {
+        this.pessoa = response;
       },
       (error: HttpErrorResponse) => {
         alert(error.message)

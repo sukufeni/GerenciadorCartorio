@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
-import {Protocolo} from './Protocolo';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
+import { Protocolo } from './Protocolo';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
 import { Pessoa } from '../pessoa/Pessoa';
 @Injectable({
   providedIn: 'root'
 })
 export class ProtocoloService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public getProtocolobyId(id:number): Observable<Protocolo>{
-    return this.http.get<Protocolo>(environment.apiBaseUrl+"/protocolo/find/"+id);
+  public getProtocolobyId(id: number): Observable<Protocolo> {
+    return this.http.get<Protocolo>(environment.apiBaseUrl + "/protocolo/find/" + id);
   }
 
-  public getProtocolobyPessoa(pessoa:Pessoa): Observable<Protocolo>{
-    return this.http.get<Protocolo>(environment.apiBaseUrl+"/protocolo/pessoa/find"+pessoa.id);
+  public getProtocolobyPessoa(idPessoa: number): Observable<Protocolo> {
+    return this.http.get<Protocolo>(environment.apiBaseUrl + "/protocolo/pessoa/find/" + idPessoa);
   }
 
-  public getProtocolos():Observable<Protocolo[]>{
-    return this.http.get<Protocolo[]>(environment.apiBaseUrl+"protocolo/all");
+  public getProtocolos(): Observable<Protocolo[]> {
+    return this.http.get<Protocolo[]>(environment.apiBaseUrl + "protocolo/all");
   }
 
-  public getTipoProtocolos(): Observable<Map<String,Number>[]>{
-    return this.http.get<Map<String,Number>[]>(environment.apiBaseUrl+"protocolo/tipos");
+  public getTipoProtocolos(): Observable<Map<string, number>[]> {
+    return this.http.get<Map<string, number>[]>(environment.apiBaseUrl + "protocolo/tipos");
   }
 
-  public gerarProtocolo(protocolo:Protocolo, idTitular: Number):Observable<Protocolo>{
-    var auxProtocolo= {
-      titularProtocolo : idTitular,
-      dataEntrega : protocolo.dataEntrega,
-      qualidadeProtocolo : protocolo.qualidadeProtocolo
+  public gerarProtocolo(protocolo: Protocolo, idTitular: number): Observable<Protocolo> {
+    var auxProtocolo = {
+      titularProtocolo: idTitular,
+      dataEntrega: protocolo.dataEntrega,
+      qualidadeProtocolo: protocolo.qualidadeProtocolo
     }
-    return this.http.post<Protocolo>(environment.apiBaseUrl+"/protocolo/gerar",auxProtocolo);
+    return this.http.post<Protocolo>(environment.apiBaseUrl + "/protocolo/gerar", auxProtocolo);
   }
 
 }
