@@ -4,7 +4,7 @@
 <div><br></div>
 <div class="container" id="main-container">
   <div class="row">
-    <div *ngFor="let protocolo of protocolos" class="col-md-6 col-xl-3">
+    <div *ngFor="let protocolo of protocolos" class="col-md-6 col-xl-6">
       <div class="card m-b-30">
         <div class="card-body row">
           <div class="col-6 card-title align-self-center mb-0">
@@ -14,10 +14,10 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <p>Cartorio: {{protocolo?.cartorio}}</p>
+            <p>Cartorio: {{protocolo?.tituloCartorio}}</p>
           </li>
           <li class="list-group-item">
-            <p>Titular: {{protocolo?.titularProtocolo}}</p>
+            <p>Titular: {{protocolo?.nomeTitular}}</p>
           </li>
           <li class="list-group-item">
             <p>Data Criação: {{protocolo?.dataCriacao}}</p>
