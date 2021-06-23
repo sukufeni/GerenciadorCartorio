@@ -29,5 +29,8 @@ export class SenhaService {
   public getSenhas(): Observable<Senha[]> {
     return this.http.get<Senha[]>(this.url + "/all");
   }
+  public deleteSenha(id:number): Observable<void>{
+    return this.http.delete<void>(`${this.url}/delete/${id}`);
+  }
 
 }

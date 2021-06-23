@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,10 @@ public class SenhaService {
         aux.addAll(filaComum);
         aux.addAll(filaPrioritario);
         return aux;
+    }
+
+    public void deleteSenha(Long id){
+        this.repository.deleteSenhaById(id);
     }
 
     public Senha gerarSenha(Senha senha){

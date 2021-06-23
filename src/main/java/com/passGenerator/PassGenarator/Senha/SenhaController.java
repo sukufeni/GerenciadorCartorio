@@ -39,4 +39,9 @@ public class SenhaController {
     public ResponseEntity<Senha> gerarSenha(@RequestBody Senha senha){
         return new ResponseEntity<>(this.senhaService.gerarSenha(senha),HttpStatus.CREATED);
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Senha> deleteSenha(@PathVariable("id") Long senha){
+        this.senhaService.deleteSenha(senha);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

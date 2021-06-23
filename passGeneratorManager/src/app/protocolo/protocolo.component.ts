@@ -11,44 +11,44 @@ import { ProtocoloService } from './protocolo.service';
   styleUrls: ['./protocolo.component.css']
 })
 export class ProtocoloComponent implements OnInit {
-  public protocolos: Protocolo[]=[];
+  public protocolos: Protocolo[] = [];
   constructor(private protocoloService: ProtocoloService, private pessoaService: PessoaService) { }
 
   ngOnInit() {
     this.getProtocolos();
   }
 
-  private getPessoafromProtocolo():void{
+  private getPessoafromProtocolo(): void {
     this.protocolos.forEach(Protocolo => {
       this.pessoaService.getPessoa(Protocolo.titularProtocolo).subscribe(
-        (response:Pessoa)=>{
+        (response: Pessoa) => {
           Protocolo.nomeTitular = response.nome;
         }
-      );  
+      );
     });
   }
-    private getCartorioFromProtcolo():void{
-    this.protocolos.forEach(auxProtocolo=> {
-      if(auxProtocolo.cartorio==1){
+  private getCartorioFromProtcolo(): void {
+    this.protocolos.forEach(auxProtocolo => {
+      if (auxProtocolo.cartorio == 1) {
         auxProtocolo.tituloCartorio = "Tabelionato de Notas"
       }
-      else if(auxProtocolo.cartorio==2){
+      else if (auxProtocolo.cartorio == 2) {
         auxProtocolo.tituloCartorio = "Protesto de Títulos"
       }
-      else if(auxProtocolo.cartorio==3){
+      else if (auxProtocolo.cartorio == 3) {
         auxProtocolo.tituloCartorio = "Registro Civil"
       }
     });
   }
-  
-  public getProtocolos():void{
+
+  public getProtocolos(): void {
     this.protocoloService.getProtocolos().subscribe(
-      (response:Protocolo[])=>{
-        this.protocolos=response;
+      (response: Protocolo[]) => {
+        this.protocolos = response;
         this.getPessoafromProtocolo();
         this.getCartorioFromProtcolo();
       },
-      (error: HttpErrorResponse)=>{
+      (error: HttpErrorResponse) => {
         alert(error.message)
       }
     );

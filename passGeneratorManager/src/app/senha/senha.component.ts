@@ -16,8 +16,7 @@ import { SenhaService } from './senha.service';
 export class SenhaComponent implements OnInit {
   public senhas: Senha[] = [];
   public senha!: Senha;
-  public pessoas: Pessoa[] = [];
-  public pessoa!: Pessoa;
+  public deleteSenha: Senha;
   public protocolo!: Protocolo;
   private idPessoa: number = -1;
   private idProtocolo: number = -1;
@@ -45,12 +44,8 @@ export class SenhaComponent implements OnInit {
     this.senhaService.getSenhas().subscribe(
       (response: Senha[]) => {
         this.senhas = response;
-        this.senhas.forEach(element => {
-          this.getPessoa(element.idPessoa);
-          this.getProtocolo(Number(element.idProtocolo));
-          element.pessoa = this.pessoa;
-          element.protocolo = this.protocolo;
-        });
+        this.getPessoa();
+        this.getProtocolo();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
@@ -93,23 +88,37 @@ export class SenhaComponent implements OnInit {
       });
   }
 
-  private getPessoa(id: number): void {
-    this.pessoaService.getPessoa(id).subscribe(
-      (response: Pessoa) => {
-        this.pessoa = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
+  private getPessoa(): void {
+    this.senhas.forEach(auxSenha => {
+      this.pessoaService.getPessoa(auxSenha.idPessoa).subscribe(
+        (response: Pessoa) => {
+          auxSenha.pessoa = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
+    });
   }
-  private getProtocolo(id: number): void {
-    this.protocoloService.getProtocolobyId(id).subscribe(
-      (response: Protocolo) => { this.protocolo = response; },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
+
+  private getProtocolo(): void {
+    this.senhas.forEach(auxSenha => {
+      this.protocoloService.getProtocolobyId(auxSenha.id).subscribe(
+        (response: Protocolo) => { auxSenha.protocolo = response; },
+        (error: HttpErrorResponse) => {
+          alert(error.message)
+        }
+      );
+    });
+  }
+
+  public onDeleteSenha(id: number): void {
+    this.senhaService.deleteSenha(id).subscribe(
+      (resp: void)=>{
+        window.location.reload();
+        this.getSenhas();
       }
-    );
+    )
   }
 
   public onModalOpen(senha: Senha | null, mode: string): void {
@@ -122,8 +131,12 @@ export class SenhaComponent implements OnInit {
     if (mode === 'add') {
       btn.setAttribute('data-target', '#addSenhaModal');
     }
-    //Tratar o gerar senha aqui?
+    if (mode === 'proxima') {
+
+    }
     if (mode === 'delete') {
+      this.deleteSenha = senha;
+      console.log(senha?.id);
       btn.setAttribute('data-target', '#DeleteSenhaModal');
     }
     container?.appendChild(btn);

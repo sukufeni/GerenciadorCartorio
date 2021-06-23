@@ -17,7 +17,7 @@ public class Senha implements Serializable {
             name = "Senha_sequence",
             sequenceName = "senha_sequence",
             allocationSize = 1,
-            initialValue = 0
+            initialValue = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
