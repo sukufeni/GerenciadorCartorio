@@ -10,6 +10,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { ProtocoloComponent } from './protocolo/protocolo.component';
 import { CartorioComponent } from './cartorio/cartorio.component';
 import { SenhaComponent } from './senha/senha.component';
+import { DisplaySenhaComponent } from './display-senha/display-senha.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SenhaComponent } from './senha/senha.component';
     PessoaComponent,
     ProtocoloComponent,
     CartorioComponent,
-    SenhaComponent
+    SenhaComponent,
+    DisplaySenhaComponent
   ],
   imports: [
     BrowserModule,
