@@ -27,7 +27,6 @@ public class SenhaService {
     @Autowired
     private final ProtocoloService protocoloService;
 
-
     private List<Senha> filaComum = new ArrayList<Senha>();
     private List<Senha> filaPrioritario = new ArrayList<Senha>();
     private Long lastSenha = 1L;
@@ -39,43 +38,51 @@ public class SenhaService {
     }
 
     public List<Senha> getSenhas() {
-        ArrayList<Senha> aux =  new ArrayList<Senha>();
+        ArrayList<Senha> aux = new ArrayList<Senha>();
         aux.addAll(filaComum);
         aux.addAll(filaPrioritario);
         return aux;
     }
 
-    public void deleteSenha(Long id){
-        this.repository.deleteSenhaById(id);
+    public Boolean deleteSenha(Long id) {
+        Optional<Senha> auxComum = this.filaComum.stream().filter(o -> o.getId().equals(id)).findFirst();
+        Optional<Senha> auxPrioritaria = this.filaPrioritario.stream().filter(o -> o.getId().equals(id)).findFirst();
+        if (auxComum.isPresent()) {
+            return this.filaComum.remove(auxComum.get());
+        } else if (auxPrioritaria.isPresent()) {
+            return this.filaPrioritario.remove(auxPrioritaria.get());
+        }
+        return false;
     }
 
-    public Senha gerarSenha(Senha senha){
-        //geração de senhas
-        Senha auxSenha = new Senha(lastSenha,senha,senha.getIdPessoa(), senha.getidProtocolo());
-        if (!senha.getCategoria().equals(Categoria.normal)){this.filaPrioritario.add(auxSenha);}
-        else{this.filaComum.add(auxSenha);}
+    public Senha gerarSenha(Senha senha) {
+        // geração de senhas
+        Senha auxSenha = new Senha(lastSenha, senha, senha.getIdPessoa(), senha.getidProtocolo());
+        if (!senha.getCategoria().equals(Categoria.normal)) {
+            this.filaPrioritario.add(auxSenha);
+        } else {
+            this.filaComum.add(auxSenha);
+        }
 
-        lastSenha+=1L;
+        lastSenha += 1L;
         return auxSenha;
     }
 
-    public Senha proximaSenha(){
+    public Senha proximaSenha() {
         Senha retornoSenha;
-        if(!this.filaPrioritario.isEmpty())
-        {
+        if (!this.filaPrioritario.isEmpty()) {
             retornoSenha = this.filaPrioritario.get(0);
             filaPrioritario.remove(retornoSenha);
             return retornoSenha;
-        }
-        else if(!this.filaComum.isEmpty()){
+        } else if (!this.filaComum.isEmpty()) {
             retornoSenha = this.filaComum.get(0);
             filaComum.remove(retornoSenha);
             return retornoSenha;
         }
-         return null;
+        return null;
     }
 
-    public void DeleteSenhas(){
+    public void DeleteSenhas() {
         this.repository.deleteAll();
     }
 }

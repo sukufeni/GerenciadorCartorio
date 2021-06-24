@@ -14,7 +14,7 @@ export class SenhaService {
   constructor(private http: HttpClient) { }
 
   public proximaSenha(): Observable<Senha> {
-    return this.http.get<Senha>(this.url + "/proximaSenha");
+    return this.http.get<Senha>(this.url + "/proximasenha");
   }
 
   public gerarSenha(senha: Senha, idPessoa: Number, idProtocolo: Number): Observable<Senha> {

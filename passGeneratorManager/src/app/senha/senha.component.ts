@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Pessoa } from '../pessoa/Pessoa';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Protocolo } from '../protocolo/Protocolo';
@@ -13,6 +14,7 @@ import { SenhaService } from './senha.service';
   templateUrl: './senha.component.html',
   styleUrls: ['./senha.component.css']
 })
+
 export class SenhaComponent implements OnInit {
   public senhas: Senha[] = [];
   public senha!: Senha;
@@ -22,7 +24,7 @@ export class SenhaComponent implements OnInit {
   private idProtocolo: number = -1;
   public TipoProtocolos: any[] = [];
 
-  constructor(private senhaService: SenhaService, private pessoaService: PessoaService, private protocoloService: ProtocoloService) { }
+  constructor(private router: Router, private senhaService: SenhaService, private pessoaService: PessoaService, private protocoloService: ProtocoloService) { }
 
   ngOnInit() {
     this.getSenhas();
@@ -116,7 +118,6 @@ export class SenhaComponent implements OnInit {
     this.senhaService.deleteSenha(id).subscribe(
       (resp: void)=>{
         window.location.reload();
-        this.getSenhas();
       }
     )
   }
@@ -132,7 +133,7 @@ export class SenhaComponent implements OnInit {
       btn.setAttribute('data-target', '#addSenhaModal');
     }
     if (mode === 'proxima') {
-
+      this.router.navigate(['/display-senha']);
     }
     if (mode === 'delete') {
       this.deleteSenha = senha;

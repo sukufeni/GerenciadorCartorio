@@ -7,5 +7,4 @@ import java.util.Optional;
 
 @Repository
 public interface SenhaRepository extends JpaRepository<Senha,Long> {
-    void deleteSenhaById(Long id);
 }

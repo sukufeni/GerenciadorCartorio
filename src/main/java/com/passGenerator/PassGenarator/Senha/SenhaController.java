@@ -28,7 +28,9 @@ public class SenhaController {
     }
 
     @GetMapping("/all")
-    public List<Senha> index(String id) {return this.senhaService.getSenhas();}
+    public List<Senha> index(String id) {
+        return this.senhaService.getSenhas();
+    }
 
     @GetMapping("/proximasenha")
     public ResponseEntity<Senha> proximaSenha() {
@@ -36,12 +38,15 @@ public class SenhaController {
     }
 
     @PostMapping("/gerar")
-    public ResponseEntity<Senha> gerarSenha(@RequestBody Senha senha){
-        return new ResponseEntity<>(this.senhaService.gerarSenha(senha),HttpStatus.CREATED);
+    public ResponseEntity<Senha> gerarSenha(@RequestBody Senha senha) {
+        return new ResponseEntity<>(this.senhaService.gerarSenha(senha), HttpStatus.CREATED);
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Senha> deleteSenha(@PathVariable("id") Long senha){
-        this.senhaService.deleteSenha(senha);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Senha> deleteSenha(@PathVariable("id") Long senha) {
+        if (this.senhaService.deleteSenha(senha)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
