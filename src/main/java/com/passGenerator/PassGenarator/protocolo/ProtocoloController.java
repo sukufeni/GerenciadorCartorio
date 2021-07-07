@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/protocolo")
@@ -36,13 +39,29 @@ public class ProtocoloController {
     }
 
     @GetMapping(path = "/tipos")
-    public ResponseEntity<List<String>> getTipoProtocolos(){
-        return new ResponseEntity<>(this.service.getTipoProtocolos(),HttpStatus.OK);
+    public ResponseEntity<List<String>> getTipoProtocolos() {
+        return new ResponseEntity<>(this.service.getTipoProtocolos(), HttpStatus.OK);
     }
 
     @PostMapping(path = "/gerar")
     public ResponseEntity<Protocolo> gerarProtocolo(@RequestBody Protocolo protocolo) {
         Protocolo retProtocolo = service.gerarProtocolo(protocolo);
         return new ResponseEntity<>(retProtocolo, HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/imprimir")
+    public ResponseEntity<List<Protocolo>> imprimirProtocolos(@RequestBody HashMap<String, Object> impressaoProtocolo) {
+        var idCartorio = impressaoProtocolo.get("idCartorio");
+        var dataProtocolo = impressaoProtocolo.get("dataProtocolo");
+        if (idCartorio != null && dataProtocolo != null) {
+            var ret = this.service.imprimirProtocolos(idCartorio.toString(), Date.valueOf(dataProtocolo.toString()));
+            if (!ret.isEmpty()) {
+                Optional<Protocolo> ff = ret.stream().filter(o -> o.getCartorio().equals(idCartorio.toString()))
+                        .findAny();
+                var auxLista = List.of(ff.get());
+                return new ResponseEntity<List<Protocolo>>(auxLista, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@Controller
 @RestController()
 @RequestMapping(path = "/senhas")
 public class SenhaController {
-    @Value("${spring.application.name}")
-    String appName;
-
+    
     private final SenhaService senhaService;
 
     @Autowired

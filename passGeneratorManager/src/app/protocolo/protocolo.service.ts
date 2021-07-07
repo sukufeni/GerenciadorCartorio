@@ -36,4 +36,11 @@ export class ProtocoloService {
     return this.http.post<Protocolo>(environment.apiBaseUrl + "/protocolo/gerar", auxProtocolo);
   }
 
+  public imprimirProtocolo(idCartorio: number, data: Date): Observable<Protocolo[]> {
+    var auxQuery = {
+      "idCartorio": idCartorio,
+      "dataProtocolo": data
+    }
+    return this.http.post<Protocolo[]>(environment.apiBaseUrl + "/protocolo/imprimir", auxQuery);
+  }
 }

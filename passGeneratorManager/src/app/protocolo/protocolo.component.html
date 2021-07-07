@@ -1,6 +1,12 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <button class="nav-link" (click)="onModalOpen()">Imprimir protocolo</button>
+    <div></div>
+  </div>
+</nav>
 <div><br></div>
 <div class="container" id="main-container">
   <div class="row">
@@ -35,6 +41,51 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Gerar Senha Modal -->
+  <div class="modal fade" id="imprimirProtocoloModel" tabindex="-1" role="dialog"
+    aria-labelledby="imprimirProtocoloModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imprimirProtocoloModalLabel">Imprimir Protocolo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onImprimirClick(addForm)">
+            <div class="form-group">
+              <label for="cartorio">Cartorio</label>
+              <select class="custom-select" name="idCartorio" id="idCartorio" ngModel="idCartorio" required>
+                <option value="1">Tabelionato de Notas</option>
+                <option value="2">Protesto de Títulos</option>
+                <option value="3">Registro Civil</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Data Protocolo Impressão</label>
+              <input type="date" ngModel="dataProtocolo | date:'dd/MM/yyyy'" name="dataProtocolo" class="form-control"
+                id="dataProtocolo" placeholder="dataProtocolo" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-pessoa-form" class="btn btn-secondary" data-dismiss="modal">fechar</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Imprimir</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification for no employees -->
+  <div *ngIf="protocolos?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">Sem Protocolos registrados!</h4>
+      <p>Não foram encontrados protocolos no momento.</p>
     </div>
   </div>
 </div>

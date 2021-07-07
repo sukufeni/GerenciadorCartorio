@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Pessoa } from '../pessoa/Pessoa';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Protocolo } from './Protocolo';
@@ -47,6 +48,37 @@ export class ProtocoloComponent implements OnInit {
         this.protocolos = response;
         this.getPessoafromProtocolo();
         this.getCartorioFromProtcolo();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    );
+  }
+  public onModalOpen(): void {
+    const container = document.getElementById('main-container');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.style.display = 'none';
+    btn.setAttribute('data-toggle', 'modal');
+    btn.setAttribute('data-target', '#imprimirProtocoloModel');
+    container?.appendChild(btn);
+    btn.click();
+  }
+
+  public onImprimirClick(addForm: NgForm): void {
+    var data = addForm.value["dataProtocolo"];
+    var idCartorio = addForm.value["idCartorio"];
+    this.protocoloService.imprimirProtocolo(idCartorio, data).subscribe(
+      (response: Protocolo[]) => {
+        this.protocolos = response;
+        this.getPessoafromProtocolo();
+        this.getCartorioFromProtcolo();
+
+        var link = document.createElement("a");
+        link.download = "protocolos.txt";
+        var data = "text/json;charset=utf-8," + JSON.stringify(this.protocolos);
+        link.href = "data:" + data;
+        link.click();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
