@@ -75,7 +75,7 @@ export class ProtocoloComponent implements OnInit {
         this.getCartorioFromProtcolo();
 
         var link = document.createElement("a");
-        link.download = "protocolos.txt";
+        link.download = "protocolos.json";
         var data = "text/json;charset=utf-8," + JSON.stringify(this.protocolos);
         link.href = "data:" + data;
         link.click();

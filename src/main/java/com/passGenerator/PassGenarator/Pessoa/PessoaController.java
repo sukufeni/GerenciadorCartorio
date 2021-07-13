@@ -1,4 +1,5 @@
 package com.passGenerator.PassGenarator.Pessoa;
+
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,26 +22,31 @@ public class PessoaController {
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity<List<Pessoa>> getPessoas(){
-        return new ResponseEntity<>(this.service.GetPessoas(),HttpStatus.OK);
+    public ResponseEntity<List<Pessoa>> getPessoas() {
+        return new ResponseEntity<>(this.service.GetPessoas(), HttpStatus.OK);
     }
+
     @GetMapping(path = "/find/cpf/{cpf}")
-    public ResponseEntity<Pessoa> getPessoaByCPF(@PathVariable("cpf")String cpf){
+    public ResponseEntity<Pessoa> getPessoaByCPF(@PathVariable("cpf") String cpf) {
         Optional<Pessoa> auxPessoa = this.service.getPessoaByCpf(cpf);
-        if(auxPessoa.isPresent())return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
-        else return new ResponseEntity <>(HttpStatus.NOT_FOUND);
+        if (auxPessoa.isPresent())
+            return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(path = "/find/{id}")
-    public ResponseEntity<Pessoa> getPessoabyId(@PathVariable("id")Long id){
+    public ResponseEntity<Pessoa> getPessoabyId(@PathVariable("id") Long id) {
         Optional<Pessoa> auxPessoa = this.service.GetPessoa(id);
-        if(auxPessoa.isPresent()) return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
-        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (auxPessoa.isPresent())
+            return new ResponseEntity<>(auxPessoa.get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(path = "/gerar")
-    public ResponseEntity<Pessoa> AddPessoa(@RequestBody Pessoa pessoa){
-        Pessoa auxPessoa= this.service.addPessoa(pessoa);
+    public ResponseEntity<Pessoa> AddPessoa(@RequestBody Pessoa pessoa) {
+        Pessoa auxPessoa = this.service.addPessoa(pessoa);
         return new ResponseEntity<>(auxPessoa, HttpStatus.OK);
     }
 }

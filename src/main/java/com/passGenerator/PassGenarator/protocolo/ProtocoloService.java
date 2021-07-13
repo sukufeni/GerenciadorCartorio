@@ -28,7 +28,8 @@ public class ProtocoloService {
     }
 
     public List<Protocolo> imprimirProtocolos(String idCartorio, Date dataProtocolo) {
-        return this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).get();
+        return this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).isEmpty() ? new ArrayList<>()
+                : this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).get();
     }
 
     public Optional<Protocolo> getProtocolobyId(Long id) {

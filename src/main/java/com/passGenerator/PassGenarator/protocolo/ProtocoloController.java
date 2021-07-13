@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,10 +57,15 @@ public class ProtocoloController {
         if (idCartorio != null && dataProtocolo != null) {
             var ret = this.service.imprimirProtocolos(idCartorio.toString(), Date.valueOf(dataProtocolo.toString()));
             if (!ret.isEmpty()) {
-                Optional<Protocolo> ff = ret.stream().filter(o -> o.getCartorio().equals(idCartorio.toString()))
-                        .findAny();
-                var auxLista = List.of(ff.get());
-                return new ResponseEntity<List<Protocolo>>(auxLista, HttpStatus.OK);
+                var filteredList = ret.stream().filter(o -> o.getCartorio() == Long.parseLong(idCartorio.toString()))
+                        .toArray();
+                List<Protocolo> retList = new ArrayList<Protocolo>();
+
+                for (Object protocolo : filteredList) {
+                    retList.add((Protocolo) protocolo);
+                }
+
+                return new ResponseEntity<List<Protocolo>>(retList, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
