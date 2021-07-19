@@ -20,11 +20,11 @@ export class ProtocoloService {
   }
 
   public getProtocolos(): Observable<Protocolo[]> {
-    return this.http.get<Protocolo[]>(environment.apiBaseUrl + "protocolo/all");
+    return this.http.get<Protocolo[]>(environment.apiBaseUrl + "/protocolo/all");
   }
 
   public getTipoProtocolos(): Observable<Map<string, number>[]> {
-    return this.http.get<Map<string, number>[]>(environment.apiBaseUrl + "protocolo/tipos");
+    return this.http.get<Map<string, number>[]>(environment.apiBaseUrl + "/protocolo/tipos");
   }
 
   public gerarProtocolo(protocolo: Protocolo, idTitular: number): Observable<Protocolo> {

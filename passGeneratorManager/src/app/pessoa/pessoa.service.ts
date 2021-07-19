@@ -10,10 +10,10 @@ export class PessoaService {
   constructor(private http: HttpClient) { }
 
   public getPessoas(): Observable<Pessoa[]> {
-    return this.http.get<Pessoa[]>(environment.apiBaseUrl + "pessoa/all");
+    return this.http.get<Pessoa[]>(environment.apiBaseUrl + "/pessoa/all");
   }
   public getPessoa(id: number): Observable<Pessoa> {
-    return this.http.get<Pessoa>(environment.apiBaseUrl + "pessoa/find/" + id);
+    return this.http.get<Pessoa>(environment.apiBaseUrl + "/pessoa/find/" + id);
   }
   public gerarPessoa(pessoa: Pessoa): Observable<Pessoa> {
     var auxPessoa = {
@@ -22,6 +22,6 @@ export class PessoaService {
       email: pessoa.email,
       telefone: pessoa.telefone
     }
-    return this.http.post<Pessoa>(environment.apiBaseUrl + "pessoa/gerar", auxPessoa);
+    return this.http.post<Pessoa>(environment.apiBaseUrl + "/pessoa/gerar", auxPessoa);
   }
 }

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/protocolo")
+@CrossOrigin(origins = "http://localhost:8080")
 public class ProtocoloController {
 
     private final ProtocoloService service;

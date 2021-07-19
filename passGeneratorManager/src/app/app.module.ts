@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { PessoaComponent } from './pessoa/pessoa.component';
 import { FormsModule } from '@angular/forms';
 import { PessoaService } from "./pessoa/pessoa.service";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ProtocoloComponent } from './protocolo/protocolo.component';
 import { CartorioComponent } from './cartorio/cartorio.component';
 import { SenhaComponent } from './senha/senha.component';
 import { DisplaySenhaComponent } from './display-senha/display-senha.component';
+import { LoginComponent } from './login/login.component';
+import { HttpInterceptorService } from './http-interceptor-request.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { DisplaySenhaComponent } from './display-senha/display-senha.component';
     ProtocoloComponent,
     CartorioComponent,
     SenhaComponent,
-    DisplaySenhaComponent
+    DisplaySenhaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,13 @@ import { DisplaySenhaComponent } from './display-senha/display-senha.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:HttpInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

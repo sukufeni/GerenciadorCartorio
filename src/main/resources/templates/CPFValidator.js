@@ -58,7 +58,6 @@ function validacpf () {
     if (
         (resto1 == (parseInt(cpf.substring( 9 , 10)))) &&
         (resto2 == (parseInt(cpf.substring( 10 , 11)))) ) {
-        alert("deuserto");
         return true;
     } else {
         alert ("CPF inválido")

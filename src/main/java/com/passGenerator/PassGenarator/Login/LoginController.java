@@ -1,14 +1,16 @@
 package com.passGenerator.PassGenarator.Login;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping(path = "/api/v2")
+@RequestMapping("/api/v1")
 public class LoginController {
-    @GetMapping("/login")
-	public String login(){
-		return "authenticated successfully" ;
-	}
+    @GetMapping("/basicauth")
+    public AuthenticationBean helloWorldBean() {
+        return new AuthenticationBean("You are authenticated");
+    }
 }
