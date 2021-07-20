@@ -19,11 +19,11 @@ export class DisplaySenhaComponent implements OnInit {
   constructor(private senhaService: SenhaService, private protocoloService: ProtocoloService, private pessoaService: PessoaService) { }
 
   ngOnInit(): void {
-    this.proximaSenha();
+    this.RenderSenha();
   }
 
-  public proximaSenha(): void {
-    this.senhaService.proximaSenha().subscribe(
+  public RenderSenha(): void {
+    this.senhaService.currSenha().subscribe(
       (response: Senha) => {
         this.currSenha = response;
         this.getPessoa();

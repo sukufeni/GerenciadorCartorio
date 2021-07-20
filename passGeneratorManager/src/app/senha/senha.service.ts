@@ -17,6 +17,10 @@ export class SenhaService {
     return this.http.get<Senha>(this.url + "/proximasenha");
   }
 
+  public currSenha(): Observable<Senha> {
+    return this.http.get<Senha>(this.url + "/currentsenha");
+  }
+
   public gerarSenha(senha: Senha, idPessoa: Number, idProtocolo: Number): Observable<Senha> {
     var auxSenha = {
       categoria: senha.categoria,

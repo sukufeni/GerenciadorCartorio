@@ -30,6 +30,7 @@ public class SenhaService {
     private List<Senha> filaComum = new ArrayList<Senha>();
     private List<Senha> filaPrioritario = new ArrayList<Senha>();
     private Long lastSenha = 1L;
+    private Senha currSenha;
 
     public SenhaService(SenhaRepository repository, PessoaService pessoaService, ProtocoloService protocoloService) {
         this.pessoaService = pessoaService;
@@ -68,18 +69,19 @@ public class SenhaService {
         return auxSenha;
     }
 
-    public Senha proximaSenha() {
-        Senha retornoSenha;
+    public void proximaSenha() {
         if (!this.filaPrioritario.isEmpty()) {
-            retornoSenha = this.filaPrioritario.get(0);
-            filaPrioritario.remove(retornoSenha);
-            return retornoSenha;
+            this.currSenha = this.filaPrioritario.get(0);
+            filaPrioritario.remove(this.currSenha);
+
         } else if (!this.filaComum.isEmpty()) {
-            retornoSenha = this.filaComum.get(0);
-            filaComum.remove(retornoSenha);
-            return retornoSenha;
+            this.currSenha = this.filaComum.get(0);
+            filaComum.remove(this.currSenha);
         }
-        return null;
+    }
+
+    public Senha currSenha() {
+        return this.currSenha == null ? null : this.currSenha;
     }
 
     public void DeleteSenhas() {

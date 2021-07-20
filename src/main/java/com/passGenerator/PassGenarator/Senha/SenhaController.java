@@ -30,9 +30,15 @@ public class SenhaController {
         return this.senhaService.getSenhas();
     }
 
+    @GetMapping("/currentsenha")
+    public ResponseEntity<Senha> getProximaSenha() {
+        return new ResponseEntity<>(this.senhaService.currSenha(), HttpStatus.OK);
+    }
     @GetMapping("/proximasenha")
     public ResponseEntity<Senha> proximaSenha() {
-        return new ResponseEntity<>(this.senhaService.proximaSenha(), HttpStatus.OK);
+        this.senhaService.proximaSenha();
+        //add alarm
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/gerar")

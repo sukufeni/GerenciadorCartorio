@@ -57,7 +57,11 @@ export class SenhaComponent implements OnInit {
 
   public proximaSenha(): void {
     this.senhaService.proximaSenha().subscribe(
-      (response: Senha) => { this.senha = response; },
+      (response: Senha) => {
+        this.senha = response;
+        alert("Senha chamada!");
+        window.location.reload();
+      },
       (error: HttpErrorResponse) => {
         alert(error.message)
       }
@@ -116,7 +120,7 @@ export class SenhaComponent implements OnInit {
 
   public onDeleteSenha(id: number): void {
     this.senhaService.deleteSenha(id).subscribe(
-      (resp: void)=>{
+      (resp: void) => {
         window.location.reload();
       }
     )
@@ -133,7 +137,7 @@ export class SenhaComponent implements OnInit {
       btn.setAttribute('data-target', '#addSenhaModal');
     }
     if (mode === 'proxima') {
-      this.router.navigate(['/display-senha']);
+      this.proximaSenha();
     }
     if (mode === 'delete') {
       this.deleteSenha = senha;
