@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Pessoa } from '../pessoa/Pessoa';
@@ -28,7 +29,7 @@ export class ProtocoloComponent implements OnInit {
       );
     });
   }
-  private getCartorioFromProtcolo(): void {
+  private setTituloCartorioFromProtocolos(): void {
     this.protocolos.forEach(auxProtocolo => {
       if (auxProtocolo.cartorio == 1) {
         auxProtocolo.tituloCartorio = "Tabelionato de Notas"
@@ -42,12 +43,26 @@ export class ProtocoloComponent implements OnInit {
     });
   }
 
+  private getTituloCartorio(idCartorio: any): string {
+
+    if (idCartorio == 1) {
+      return "Tabelionato de Notas";
+    }
+    else if (idCartorio == 2) {
+      return "Protesto de Títulos";
+    }
+    else if (idCartorio == 3) {
+      idCartorio = "Registro Civil";
+    }
+    return "";
+  }
+
   public getProtocolos(): void {
     this.protocoloService.getProtocolos().subscribe(
       (response: Protocolo[]) => {
         this.protocolos = response;
         this.getPessoafromProtocolo();
-        this.getCartorioFromProtcolo();
+        this.setTituloCartorioFromProtocolos();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
@@ -66,16 +81,16 @@ export class ProtocoloComponent implements OnInit {
   }
 
   public onImprimirClick(addForm: NgForm): void {
-    var data = addForm.value["dataProtocolo"];
+    var dataProtocolo = addForm.value["dataProtocolo"];
     var idCartorio = addForm.value["idCartorio"];
-    this.protocoloService.imprimirProtocolo(idCartorio, data).subscribe(
+    var filename: string = `Relatorio_${dataProtocolo}_${this.getTituloCartorio(idCartorio)}`;
+    this.protocoloService.imprimirProtocolo(idCartorio, dataProtocolo).subscribe(
       (response: Protocolo[]) => {
         this.protocolos = response;
         this.getPessoafromProtocolo();
-        this.getCartorioFromProtcolo();
-
+        this.setTituloCartorioFromProtocolos();
         var link = document.createElement("a");
-        link.download = "protocolos.json";
+        link.download = `${filename}.json`;
         var data = "text/json;charset=utf-8," + JSON.stringify(this.protocolos);
         link.href = "data:" + data;
         link.click();
