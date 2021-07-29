@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { PessoaComponent } from "./pessoa/pessoa.component";
 import { ProtocoloComponent } from './protocolo/protocolo.component';
 import { SenhaComponent } from './senha/senha.component';
+import { WrongRouteComponent } from './wrong-route/wrong-route.component';
 
 const routes: Routes = [
   {
@@ -38,9 +39,15 @@ const routes: Routes = [
     pathMatch: "full"
   },
   {
+    path: "error",
+    component: WrongRouteComponent
+  },
+  {
     path: "",
     component: LoginComponent
-  }
+  },
+  //Wild Card Route
+  { path: '**', pathMatch: 'full', component: WrongRouteComponent },
 ];
 
 @NgModule({

@@ -3,6 +3,8 @@ import {Pessoa} from './Pessoa';
 import {PessoaService} from './pessoa.service';
 import {HttpErrorResponse} from "@angular/common/http";
 import { NgForm } from '@angular/forms';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pessoa',
@@ -14,7 +16,8 @@ export class PessoaComponent implements OnInit {
   public editPessoa: Pessoa | null = null;
   public deletePessoa: Pessoa | null = null;
 
-  constructor(private pessoaService: PessoaService) {
+  constructor(private pessoaService: PessoaService,
+    private router: Router) {
   }
   ngOnInit(){
     this.getPessoas();
@@ -24,7 +27,7 @@ export class PessoaComponent implements OnInit {
     this.pessoaService.getPessoas().subscribe(
       (response:Pessoa[])=>{this.pessoas=response;},
       (error: HttpErrorResponse)=>{
-        alert(error.message)
+        this.router.navigate(['/error'])
       }
     );
   }

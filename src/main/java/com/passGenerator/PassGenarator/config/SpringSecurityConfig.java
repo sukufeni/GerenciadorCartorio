@@ -15,15 +15,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/**").hasAnyRole("user", "admin")
+		http.csrf().disable().authorizeRequests()
+				// .antMatchers(HttpMethod.GET, "/**").hasAnyRole("user", "admin")
+				// full access to everyone
 				.antMatchers(HttpMethod.GET, "/senha/proximasenha").hasRole("admin")
-				.antMatchers(HttpMethod.GET, "/senhas/all").hasAnyRole("user", "admin")
-				.antMatchers(HttpMethod.POST, "/senhas/gerar").hasAnyRole("user", "admin")
+				.antMatchers(HttpMethod.GET, "/protocolo/all").hasRole("admin")
+				.antMatchers(HttpMethod.GET, "/pessoa/all").hasRole("admin").antMatchers(HttpMethod.GET, "/senhas/all")
+				.hasAnyRole("user", "admin").antMatchers(HttpMethod.POST, "/senhas/gerar").hasAnyRole("user", "admin")
 				.antMatchers(HttpMethod.POST, "/pessoa/gerar").hasAnyRole("user", "admin")
 				.antMatchers(HttpMethod.POST, "/protocolo/gerar").hasAnyRole("user", "admin")
+				.antMatchers(HttpMethod.POST, "/protocolo/imprimir").hasAnyRole("user", "admin")
 				.antMatchers(HttpMethod.GET, "/protocolo/tipos").hasAnyRole("user", "admin")
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and().httpBasic();
-
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and().httpBasic().and()
+				.exceptionHandling().accessDeniedPage("/error");
 	}
 
 	@Bean

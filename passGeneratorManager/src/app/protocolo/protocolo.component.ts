@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Pessoa } from '../pessoa/Pessoa';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Protocolo } from './Protocolo';
@@ -14,7 +15,10 @@ import { ProtocoloService } from './protocolo.service';
 })
 export class ProtocoloComponent implements OnInit {
   public protocolos: Protocolo[] = [];
-  constructor(private protocoloService: ProtocoloService, private pessoaService: PessoaService) { }
+  constructor(
+    private router: Router,
+    private protocoloService: ProtocoloService, 
+    private pessoaService: PessoaService) { }
 
   ngOnInit() {
     this.getProtocolos();
@@ -65,7 +69,8 @@ export class ProtocoloComponent implements OnInit {
         this.setTituloCartorioFromProtocolos();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message)
+        console.log(error.message)
+        this.router.navigate(['/error'])
       }
     );
   }

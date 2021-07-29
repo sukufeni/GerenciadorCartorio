@@ -13,6 +13,7 @@ import { SenhaComponent } from './senha/senha.component';
 import { DisplaySenhaComponent } from './display-senha/display-senha.component';
 import { LoginComponent } from './login/login.component';
 import { HttpInterceptorService } from './http-interceptor-request.service';
+import { WrongRouteComponent } from './wrong-route/wrong-route.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpInterceptorService } from './http-interceptor-request.service';
     CartorioComponent,
     SenhaComponent,
     DisplaySenhaComponent,
-    LoginComponent
+    LoginComponent,
+    WrongRouteComponent
   ],
   imports: [
     BrowserModule,
