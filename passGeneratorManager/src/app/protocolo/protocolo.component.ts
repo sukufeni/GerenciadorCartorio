@@ -17,7 +17,7 @@ export class ProtocoloComponent implements OnInit {
   public protocolos: Protocolo[] = [];
   constructor(
     private router: Router,
-    private protocoloService: ProtocoloService, 
+    private protocoloService: ProtocoloService,
     private pessoaService: PessoaService) { }
 
   ngOnInit() {
@@ -101,7 +101,7 @@ export class ProtocoloComponent implements OnInit {
         link.click();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message)
+        alert("Não foi possivel gerar o Relatório.")
       }
     );
   }

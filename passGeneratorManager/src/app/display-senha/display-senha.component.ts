@@ -20,6 +20,7 @@ export class DisplaySenhaComponent implements OnInit {
 
   ngOnInit(): void {
     this.RenderSenha();
+    setTimeout(location.reload.bind(location), 10000);
   }
 
   public RenderSenha(): void {
