@@ -35,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "senha",
     pathMatch: "full"
   },
   {
@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    component: LoginComponent
+    component: SenhaComponent
   },
   //Wild Card Route
   { path: '**', pathMatch: 'full', component: WrongRouteComponent },

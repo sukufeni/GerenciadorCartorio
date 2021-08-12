@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class AuthService {
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
   pass_SESSION_ATTRIBUTE_NAME = 'authenticatedPass'
 
-  public username: string;
+public username: string;
   public password: string;
 
   constructor(private http: HttpClient) {
@@ -19,8 +20,13 @@ export class AuthService {
   }
 
   authenticationService(username: string, password: string) {
-    return this.http.get(`http://localhost:8081/api/v1/basicauth`,
+    // return this.http.get("http://www.google.com").pipe(map((res)=>{
+    //   console.log("ah n");
+    // }));
+
+    return this.http.get(environment.apiBaseUrl + ":8081/api/v1/basicauth",
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
+        
         this.username = username;
         this.password = password;
         this.registerSuccessfulLogin(username, password);

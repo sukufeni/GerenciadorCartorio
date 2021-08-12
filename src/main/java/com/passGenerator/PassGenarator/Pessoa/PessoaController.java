@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController()
 @RequestMapping(path = "/pessoa")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 public class PessoaController {
     private final PessoaService service;
 

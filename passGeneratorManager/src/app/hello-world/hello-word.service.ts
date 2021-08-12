@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from './message';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,6 @@ export class HelloWordService {
 
   helloWorldService() {
     //const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa('javaguides' + ':' + 'password') });
-    return this.http.get<Message>('http://localhost:8081/api/v1/greeting');
+    return this.http.get<Message>(`${environment.apiBaseUrl}:8081/api/v1/greeting`);
   }
 }

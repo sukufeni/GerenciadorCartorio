@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping(path = "/senhas")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*")
 public class SenhaController {
     
     private final SenhaService senhaService;
