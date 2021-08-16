@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+passGeneratorManager/src/environments/environment.prod.ts
+passGeneratorManager/src/environments/environment.ts

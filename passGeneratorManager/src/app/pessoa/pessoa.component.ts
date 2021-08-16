@@ -3,7 +3,6 @@ import {Pessoa} from './Pessoa';
 import {PessoaService} from './pessoa.service';
 import {HttpErrorResponse} from "@angular/common/http";
 import { NgForm } from '@angular/forms';
-import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -43,8 +42,7 @@ export class PessoaComponent implements OnInit {
       }
     )
   }
-
-
+  
   public onOpenModal(pessoa: Pessoa | null, mode: string): void{
     const container = document.getElementById('main-container');
     const btn = document.createElement('button');
@@ -58,7 +56,7 @@ export class PessoaComponent implements OnInit {
       btn.setAttribute('data-target','#editPessoaModal');
       this.editPessoa = pessoa;
     }
-    //Tratar o proxima senha aqui?
+
     if(mode==='delete'){
       btn.setAttribute('data-target','#deleteSenhaModal');
       this.deletePessoa = pessoa;

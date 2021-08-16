@@ -15,10 +15,12 @@ import { ProtocoloService } from './protocolo.service';
 })
 export class ProtocoloComponent implements OnInit {
   public protocolos: Protocolo[] = [];
+  public deleteProtocolo: Protocolo | null = null;
   constructor(
     private router: Router,
     private protocoloService: ProtocoloService,
     private pessoaService: PessoaService) { }
+
 
   ngOnInit() {
     this.getProtocolos();
@@ -74,7 +76,8 @@ export class ProtocoloComponent implements OnInit {
       }
     );
   }
-  public onModalOpen(): void {
+
+  public onModalImprimirOpen(): void {
     const container = document.getElementById('main-container');
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -83,6 +86,35 @@ export class ProtocoloComponent implements OnInit {
     btn.setAttribute('data-target', '#imprimirProtocoloModel');
     container?.appendChild(btn);
     btn.click();
+  }
+
+  public onModadeletelOpen(protocolo: Protocolo): void {
+    const container = document.getElementById('main-container');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.style.display = 'none';
+
+
+    btn.setAttribute('data-toggle', 'modal');
+    btn.setAttribute('data-target', '#deleteProtocoloaModal');
+    this.deleteProtocolo = protocolo;
+
+    container?.appendChild(btn);
+    btn.click();
+  }
+
+  public onDeleteClick(): void {
+    this.protocoloService.deleteProtocolo(this.deleteProtocolo?.id.toString()).subscribe(
+      (Response: Boolean) => {
+        if (Response === true) {
+          window.location.reload();
+          alert("Protocolo Excluido com sucesso! ");
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert("Não foi possível apagar o Protocolo.");
+      }
+    );
   }
 
   public onImprimirClick(addForm: NgForm): void {

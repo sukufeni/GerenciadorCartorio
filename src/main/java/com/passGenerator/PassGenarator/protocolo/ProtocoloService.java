@@ -71,4 +71,14 @@ public class ProtocoloService {
             throw new IllegalStateException("Protocolo não encontrado!");
         return protocolo.get();
     }
+
+    public boolean deleteProtocolo(Long idProtocolo) {
+        try {
+            this.repository.deleteById(idProtocolo);
+            Optional<Protocolo> exists = this.repository.findById(idProtocolo);
+            return !exists.isPresent();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

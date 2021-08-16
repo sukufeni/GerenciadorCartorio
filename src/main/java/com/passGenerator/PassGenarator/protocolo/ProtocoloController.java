@@ -49,6 +49,13 @@ public class ProtocoloController {
         return new ResponseEntity<>(retProtocolo, HttpStatus.CREATED);
     }
 
+    @DeleteMapping(path = "/delete/{idProtocolo}")
+    public ResponseEntity<Boolean> deleteProtocolo(@PathVariable("idProtocolo") String idProtocolo) {
+        boolean result = this.service.deleteProtocolo(Long.parseLong(idProtocolo));
+        return result ? new ResponseEntity<Boolean>(true, HttpStatus.OK)
+                : new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @PostMapping(path = "/imprimir")
     public ResponseEntity<List<Protocolo>> imprimirProtocolos(@RequestBody HashMap<String, Object> impressaoProtocolo) {
         var idCartorio = impressaoProtocolo.get("idCartorio");

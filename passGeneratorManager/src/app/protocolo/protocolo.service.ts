@@ -36,6 +36,11 @@ export class ProtocoloService {
     return this.http.post<Protocolo>(environment.apiBaseUrl + "/protocolo/gerar", auxProtocolo);
   }
 
+  public deleteProtocolo(idProtocolo: String): Observable<Boolean> {
+    console.log(environment.apiBaseUrl + "/protocolo/delete/" + idProtocolo);
+    return this.http.delete<Boolean>(environment.apiBaseUrl + "/protocolo/delete/" + idProtocolo);
+  }
+
   public imprimirProtocolo(idCartorio: number, data: Date): Observable<Protocolo[]> {
     var auxQuery = {
       "idCartorio": idCartorio,
