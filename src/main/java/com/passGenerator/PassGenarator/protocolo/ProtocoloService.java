@@ -24,7 +24,8 @@ public class ProtocoloService {
     }
 
     public List<Protocolo> getProtocolos() {
-        return this.repository.findAll();
+        this.repository.findAll();
+        return this.repository.findProtocolosActive();
     }
 
     public List<Protocolo> imprimirProtocolos(String idCartorio, Date dataProtocolo) {
@@ -72,11 +73,16 @@ public class ProtocoloService {
         return protocolo.get();
     }
 
-    public boolean deleteProtocolo(Long idProtocolo) {
+    public boolean disableProtocolo(Long idProtocolo, String observacao) {
         try {
-            this.repository.deleteById(idProtocolo);
-            Optional<Protocolo> exists = this.repository.findById(idProtocolo);
-            return !exists.isPresent();
+            Optional<Protocolo> auxProtocolo = this.repository.findById(idProtocolo);
+            if (auxProtocolo.isPresent()) {
+                Protocolo found = auxProtocolo.get();
+                found.disableProtocolo(observacao);
+                this.repository.save(found);
+                return found.getExcluido();
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }

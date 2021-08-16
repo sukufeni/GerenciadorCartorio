@@ -49,9 +49,12 @@ public class ProtocoloController {
         return new ResponseEntity<>(retProtocolo, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/delete/{idProtocolo}")
-    public ResponseEntity<Boolean> deleteProtocolo(@PathVariable("idProtocolo") String idProtocolo) {
-        boolean result = this.service.deleteProtocolo(Long.parseLong(idProtocolo));
+    @PutMapping(path = "/disable")
+    public ResponseEntity<Boolean> deleteProtocolo(@RequestBody HashMap<String, Object> protocolo) {
+        Long idProtocolo = Long.parseLong(protocolo.get("idProtocolo").toString());
+        String motivo = protocolo.get("motivo").toString();
+
+        boolean result = this.service.disableProtocolo(idProtocolo,motivo);
         return result ? new ResponseEntity<Boolean>(true, HttpStatus.OK)
                 : new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
     }

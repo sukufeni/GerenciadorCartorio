@@ -103,8 +103,10 @@ export class ProtocoloComponent implements OnInit {
     btn.click();
   }
 
-  public onDeleteClick(): void {
-    this.protocoloService.deleteProtocolo(this.deleteProtocolo?.id.toString()).subscribe(
+  public onDeleteClick(deleteForm: NgForm): void {
+    var idProtocolo = this.deleteProtocolo?.id.toString();
+    var observacao = deleteForm.value["observacao"];
+    this.protocoloService.deleteProtocolo(idProtocolo,observacao).subscribe(
       (Response: Boolean) => {
         if (Response === true) {
           window.location.reload();
