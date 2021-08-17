@@ -24,7 +24,6 @@ public class ProtocoloService {
     }
 
     public List<Protocolo> getProtocolos() {
-        this.repository.findAll();
         return this.repository.findProtocolosActive();
     }
 

@@ -54,7 +54,7 @@ public class ProtocoloController {
         Long idProtocolo = Long.parseLong(protocolo.get("idProtocolo").toString());
         String motivo = protocolo.get("motivo").toString();
 
-        boolean result = this.service.disableProtocolo(idProtocolo,motivo);
+        boolean result = this.service.disableProtocolo(idProtocolo, motivo);
         return result ? new ResponseEntity<Boolean>(true, HttpStatus.OK)
                 : new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -73,10 +73,12 @@ public class ProtocoloController {
                 for (Object protocolo : filteredList) {
                     retList.add((Protocolo) protocolo);
                 }
-
                 return new ResponseEntity<List<Protocolo>>(retList, HttpStatus.OK);
             }
+            //Not found but code worked
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        //Error on request itself
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
