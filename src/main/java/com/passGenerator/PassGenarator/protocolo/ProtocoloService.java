@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +28,9 @@ public class ProtocoloService {
         return this.repository.findProtocolosActive();
     }
 
-    public List<Protocolo> imprimirProtocolos(String idCartorio, Date dataProtocolo) {
-        return this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).isEmpty() ? new ArrayList<>()
-                : this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).get();
+    public Object imprimirProtocolos(String idCartorio) {
+        return this.repository.findByDataCriacao(LocalDate.now()).get().stream()
+        .filter(o -> o.getCartorio() == Long.parseLong(idCartorio)).toArray();
     }
 
     public Optional<Protocolo> getProtocolobyId(Long id) {

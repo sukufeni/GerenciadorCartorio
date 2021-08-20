@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,25 +58,13 @@ public class ProtocoloController {
     }
 
     @PostMapping(path = "/imprimir")
-    public ResponseEntity<List<Protocolo>> imprimirProtocolos(@RequestBody HashMap<String, Object> impressaoProtocolo) {
+    public ResponseEntity<Object> imprimirProtocolos(@RequestBody HashMap<String, Object> impressaoProtocolo) {
         var idCartorio = impressaoProtocolo.get("idCartorio");
-        var dataProtocolo = impressaoProtocolo.get("dataProtocolo");
-        if (idCartorio != null && dataProtocolo != null) {
-            var ret = this.service.imprimirProtocolos(idCartorio.toString(), Date.valueOf(dataProtocolo.toString()));
-            if (!ret.isEmpty()) {
-                var filteredList = ret.stream().filter(o -> o.getCartorio() == Long.parseLong(idCartorio.toString()))
-                        .toArray();
-                List<Protocolo> retList = new ArrayList<Protocolo>();
-
-                for (Object protocolo : filteredList) {
-                    retList.add((Protocolo) protocolo);
-                }
-                return new ResponseEntity<List<Protocolo>>(retList, HttpStatus.OK);
-            }
-            //Not found but code worked
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (idCartorio != null) {
+            var ret = this.service.imprimirProtocolos(idCartorio.toString());
+            return new ResponseEntity<Object>(ret, HttpStatus.OK);
         }
-        //Error on request itself
+        // Error on request itself
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

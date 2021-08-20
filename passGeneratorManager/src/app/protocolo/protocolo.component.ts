@@ -7,6 +7,7 @@ import { Pessoa } from '../pessoa/Pessoa';
 import { PessoaService } from '../pessoa/pessoa.service';
 import { Protocolo } from './Protocolo';
 import { ProtocoloService } from './protocolo.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-protocolo',
@@ -106,7 +107,7 @@ export class ProtocoloComponent implements OnInit {
   public onDeleteClick(deleteForm: NgForm): void {
     var idProtocolo = this.deleteProtocolo?.id.toString();
     var observacao = deleteForm.value["observacao"];
-    this.protocoloService.deleteProtocolo(idProtocolo,observacao).subscribe(
+    this.protocoloService.deleteProtocolo(idProtocolo, observacao).subscribe(
       (Response: Boolean) => {
         if (Response === true) {
           window.location.reload();
@@ -120,19 +121,22 @@ export class ProtocoloComponent implements OnInit {
   }
 
   public onImprimirClick(addForm: NgForm): void {
-    var dataProtocolo = addForm.value["dataProtocolo"];
+    var dataProtocolo = new Date().toLocaleDateString();
     var idCartorio = addForm.value["idCartorio"];
-    var filename: string = `Relatorio_${dataProtocolo}_${this.getTituloCartorio(idCartorio)}`;
-    this.protocoloService.imprimirProtocolo(idCartorio, dataProtocolo).subscribe(
+    var filename: string = `Relatorio_${dataProtocolo}_${this.getTituloCartorio(idCartorio)}.xlsx`;
+    this.protocoloService.imprimirProtocolo(idCartorio).subscribe(
       (response: Protocolo[]) => {
         this.protocolos = response;
         this.getPessoafromProtocolo();
         this.setTituloCartorioFromProtocolos();
-        var link = document.createElement("a");
-        link.download = `${filename}.json`;
-        var data = "text/json;charset=utf-8," + JSON.stringify(this.protocolos);
-        link.href = "data:" + data;
-        link.click();
+        
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(this.protocolos)));
+        const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+        /* save to file */
+        XLSX.writeFile(wb, filename);
       },
       (error: HttpErrorResponse) => {
         alert("Não foi possivel gerar o Relatório.")
