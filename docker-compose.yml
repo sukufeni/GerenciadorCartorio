@@ -1,0 +1,20 @@
+version: "3.1"
+services:
+  be:
+    container_name: backend
+    # specify docker file path?
+    image: be
+    build: ./src/main/docker/
+    ports:
+      - "8081:8081"
+  fe:
+    container_name: frontend
+    image: frontend
+    build: ./passGeneratorManager
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - be
+networks:
+  some_net:
+    driver: bridge
