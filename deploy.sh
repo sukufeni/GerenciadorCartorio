@@ -14,3 +14,5 @@ docker buildx build -f src/main/docker/Dockerfile -t be --platform linux/amd64 .
 
 echo "running docker-compose"
 docker compose up -d
+
+docker compose logs -f

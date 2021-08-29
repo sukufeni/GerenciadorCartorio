@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
 export class LoginComponent implements OnInit {
 
   username: string;
-  password : string;
+  password: string;
   errorMessage = 'Invalid Credentials';
   successMessage: string;
   invalidLogin = false;
@@ -19,13 +19,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthService) {   }
+    private authenticationService: AuthService) { }
 
   ngOnInit() {
   }
 
   handleLogin() {
-    this.authenticationService.authenticationService(this.username, this.password).subscribe((result)=> {
+    this.authenticationService.authenticationService(this.username, this.password).subscribe((result) => {
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful.';
@@ -33,6 +33,6 @@ export class LoginComponent implements OnInit {
     }, () => {
       this.invalidLogin = true;
       this.loginSuccess = false;
-    });      
+    });
   }
 }

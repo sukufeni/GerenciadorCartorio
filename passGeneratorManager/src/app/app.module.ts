@@ -12,7 +12,7 @@ import { CartorioComponent } from './cartorio/cartorio.component';
 import { SenhaComponent } from './senha/senha.component';
 import { DisplaySenhaComponent } from './display-senha/display-senha.component';
 import { LoginComponent } from './login/login.component';
-// import { HttpInterceptorService } from './http-interceptor-request.service';
+import { HttpInterceptorService } from './http-interceptor-request.service';
 import { WrongRouteComponent } from './wrong-route/wrong-route.component';
 
 @NgModule({
@@ -32,13 +32,13 @@ import { WrongRouteComponent } from './wrong-route/wrong-route.component';
     HttpClientModule,
     FormsModule
   ],
-  // providers: [
-  //   {
-  //     provide:HTTP_INTERCEPTORS,
-  //     useClass:HttpInterceptorService,
-  //     multi:true
-  //   }
-  // ]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

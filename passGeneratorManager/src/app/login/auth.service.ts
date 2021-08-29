@@ -8,11 +8,11 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
-  // BASE_PATH: 'http://localhost:8080'
+  // BASE_PATH: 'http://passgenarator_passgenarator_some_net:8080'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
   pass_SESSION_ATTRIBUTE_NAME = 'authenticatedPass'
 
-public username: string;
+  public username: string;
   public password: string;
 
   constructor(private http: HttpClient) {
@@ -20,13 +20,10 @@ public username: string;
   }
 
   authenticationService(username: string, password: string) {
-    // return this.http.get("http://www.google.com").pipe(map((res)=>{
-    //   console.log("ah n");
-    // }));
-
-    return this.http.get(environment.apiBaseUrl + ":8081/api/v1/basicauth",
+    console.log(environment.apiBaseUrl + "/api/v1/basicauth");
+    return this.http.get(environment.apiBaseUrl + "/api/v1/basicauth",
       { headers: { authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
-        
+
         this.username = username;
         this.password = password;
         this.registerSuccessfulLogin(username, password);
