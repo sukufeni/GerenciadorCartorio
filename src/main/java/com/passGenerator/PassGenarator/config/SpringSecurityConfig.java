@@ -7,9 +7,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+
+import ch.qos.logback.core.encoder.Encoder;
 
 @Configuration
 @EnableWebSecurity
@@ -35,10 +39,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		final InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-		manager.createUser(User.withDefaultPasswordEncoder().username("eron").password("master").roles("admin").build());
-		manager.createUser(User.withDefaultPasswordEncoder().username("default").password("default").roles("user").build());
-
+		manager.createUser(User.withUsername("eron").password(encoder.encode("master")).roles("admin").build());
+		manager.createUser(User.withUsername("default").password(encoder.encode("default")).roles("user").build());
+		
 		return manager;
 	}
 
