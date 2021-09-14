@@ -10,10 +10,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
-
-import ch.qos.logback.core.encoder.Encoder;
 
 @Configuration
 @EnableWebSecurity
@@ -47,13 +43,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		return manager;
 	}
 
-	@Bean
-	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-		StrictHttpFirewall firewall = new StrictHttpFirewall();
-		firewall.setAllowUrlEncodedSlash(true);
-		firewall.setAllowSemicolon(true);
-		firewall.setAllowUrlEncodedDoubleSlash(true);
-		return firewall;
-	}
+	// @Bean
+	// public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+	// 	StrictHttpFirewall firewall = new StrictHttpFirewall();
+	// 	firewall.setAllowUrlEncodedSlash(true);
+	// 	firewall.setAllowSemicolon(true);
+	// 	firewall.setAllowUrlEncodedDoubleSlash(true);
+	// 	return firewall;
+	// }
 
 }

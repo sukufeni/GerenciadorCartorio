@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: "http://passgenarator_pass-net:8081"
+  apiBaseUrl: "http://localhost:85"
 };
 
