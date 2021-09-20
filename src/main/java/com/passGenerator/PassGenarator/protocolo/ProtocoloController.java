@@ -1,10 +1,15 @@
 package com.passGenerator.PassGenarator.protocolo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,4 +72,19 @@ public class ProtocoloController {
         // Error on request itself
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @PostMapping(path = "/imprimir/detalhado")
+    public ResponseEntity<InputStreamResource> imprimirProtocoloDetalhado(
+            @RequestBody HashMap<String, Object> impressaoProtocolo) {
+        var idProtocolo = impressaoProtocolo.get("idProtocolo");
+
+        if (idProtocolo != null) {
+            ByteArrayInputStream ret = this.service.imprimirProtocoloDetalhado(idProtocolo.toString());
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(ret));
+        }
+        // Error on request itself
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
 }

@@ -41,9 +41,15 @@ export class ProtocoloService {
       idProtocolo: idProtocolo,
       motivo: motivo
     }
-    return this.http.put<Boolean>(environment.apiBaseUrl + "/protocolo/disable",auxProtocolo);
+    return this.http.put<Boolean>(environment.apiBaseUrl + "/protocolo/disable", auxProtocolo);
   }
 
+  public imprimirProtocoloDetalhado(idProtocolo: String): Observable<Blob> {
+    var auxQuery = {
+      "idProtocolo": idProtocolo
+    }
+    return this.http.post(environment.apiBaseUrl + "/protocolo/imprimir/detalhado", auxQuery, { responseType: 'blob' });
+  }
   public imprimirProtocolo(idCartorio: number): Observable<Protocolo[]> {
     var auxQuery = {
       "idCartorio": idCartorio

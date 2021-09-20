@@ -4,7 +4,7 @@ import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,10 @@ public class ProtocoloService {
     public Object imprimirProtocolos(String idCartorio) {
         return this.repository.findByDataCriacao(LocalDate.now()).get().stream()
         .filter(o -> o.getCartorio() == Long.parseLong(idCartorio)).toArray();
+    }
+
+    public ByteArrayInputStream imprimirProtocoloDetalhado(String idProtocolo){
+        return PdfGenerator.generateProtocolo(this.repository.getById(Long.parseLong(idProtocolo)));
     }
 
     public Optional<Protocolo> getProtocolobyId(Long id) {

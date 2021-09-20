@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext, Type } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Pessoa } from '../pessoa/Pessoa';
@@ -8,6 +8,7 @@ import { PessoaService } from '../pessoa/pessoa.service';
 import { Protocolo } from './Protocolo';
 import { ProtocoloService } from './protocolo.service';
 import * as XLSX from 'xlsx';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-protocolo',
@@ -120,6 +121,16 @@ export class ProtocoloComponent implements OnInit {
     );
   }
 
+  public onImprimirDetalhadoClick(protocolo: Protocolo): void {
+    var filename: string = `Protocolo_${protocolo.id}.pdf`;
+
+    this.protocoloService.imprimirProtocoloDetalhado(protocolo.id.toLocaleString()).subscribe(
+      (response) => { // download file
+        var blob = new Blob([response], { type: 'application/pdf' });
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl);
+      });
+  }
   public onImprimirClick(addForm: NgForm): void {
     var dataProtocolo = new Date().toLocaleDateString();
     var idCartorio = addForm.value["idCartorio"];
@@ -129,7 +140,7 @@ export class ProtocoloComponent implements OnInit {
         this.protocolos = response;
         this.getPessoafromProtocolo();
         this.setTituloCartorioFromProtocolos();
-        
+
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(this.protocolos)));
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
 

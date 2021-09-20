@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "~12.0.2",
     "@angular/router": "~12.0.2",
     "file-saver": "^2.0.5",
+    "iframe": "^1.0.0",
     "json2csv": "^5.0.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
