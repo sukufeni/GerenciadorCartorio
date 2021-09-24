@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-import com.passGenerator.PassGenarator.protocolo.TipoProtocolo;
 
 @Configuration
 public class CartorioConfig {

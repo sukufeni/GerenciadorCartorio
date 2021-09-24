@@ -36,3 +36,4 @@ src/main/resources/application.properties
 src/main/resources/application.properties
 passGeneratorManager/src/environments/environment.prod.ts
 passGeneratorManager/src/environments/environment.ts
+src/main/resources/application.properties

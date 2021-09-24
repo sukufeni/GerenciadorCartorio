@@ -35,6 +35,10 @@
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">
+            <a (click)="onImprimirDetalhadoClick(protocolo)" class="btn btn-secondary tooltips" data-placement="top"
+              data-toggle="tooltip" data-original-title="Imprimir"><i class="fa fa-plus"></i>Imprimir</a>
+          </div>
+          <div class="float-right btn-group btn-group-sm bg-color-red">
             <a (click)="onModadeletelOpen(protocolo)" class="btn btn-secondary tooltips" data-placement="top"
               data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i>Apagar</a>
           </div>
@@ -94,12 +98,7 @@
                 <option value="3">Registro Civil</option>
               </select>
             </div>
-
-            <div class="form-group">
-              <label for="date">Data Protocolo Impressão</label>
-              <input type="date" ngModel="dataProtocolo | date:'dd/MM/yyyy'" name="dataProtocolo" class="form-control"
-                id="dataProtocolo" placeholder="dataProtocolo" required>
-            </div>
+            
             <div class="modal-footer">
               <button type="button" id="add-pessoa-form" class="btn btn-secondary" data-dismiss="modal">fechar</button>
               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Imprimir</button>

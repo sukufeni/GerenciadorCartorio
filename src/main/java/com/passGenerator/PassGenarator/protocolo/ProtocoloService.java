@@ -1,10 +1,14 @@
 package com.passGenerator.PassGenarator.protocolo;
 
+import com.passGenerator.PassGenarator.Cartorio.Cartorio;
+import com.passGenerator.PassGenarator.Cartorio.CartorioRepository;
+import com.passGenerator.PassGenarator.Pessoa.Pessoa;
 import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,19 +22,32 @@ public class ProtocoloService {
     @Autowired
     private final PessoaRepository pessoaRepository;
 
-    public ProtocoloService(ProtocoloRepository repository, PessoaRepository pessoaRepository) {
+    @Autowired
+    private final CartorioRepository cartorioRepository;
+
+    public ProtocoloService(ProtocoloRepository repository, PessoaRepository pessoaRepository,
+            CartorioRepository cartorioRepository) {
         this.repository = repository;
         this.pessoaRepository = pessoaRepository;
+        this.cartorioRepository = cartorioRepository;
     }
 
     public List<Protocolo> getProtocolos() {
-        this.repository.findAll();
         return this.repository.findProtocolosActive();
     }
 
-    public List<Protocolo> imprimirProtocolos(String idCartorio, Date dataProtocolo) {
-        return this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).isEmpty() ? new ArrayList<>()
-                : this.repository.findByDataCriacao(dataProtocolo.toLocalDate()).get();
+    public Object imprimirProtocolos(String idCartorio) {
+        return this.repository.findByDataCriacao(LocalDate.now()).get().stream()
+                .filter(o -> o.getCartorio() == Long.parseLong(idCartorio)).toArray();
+    }
+
+    public ByteArrayInputStream imprimirProtocoloDetalhado(String idProtocolo) {
+
+        Protocolo returnedProtocolo = this.repository.getById(Long.parseLong(idProtocolo));
+        Pessoa apresentante = pessoaRepository.getById(returnedProtocolo.getTitularProtocolo());
+        Cartorio emitente = cartorioRepository.getById(returnedProtocolo.getCartorio());
+
+        return PdfGenerator.generateProtocolo(returnedProtocolo, apresentante.getNome(), emitente);
     }
 
     public Optional<Protocolo> getProtocolobyId(Long id) {

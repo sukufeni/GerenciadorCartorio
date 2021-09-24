@@ -1,18 +1,14 @@
 package com.passGenerator.PassGenarator.Senha;
 
-import com.passGenerator.PassGenarator.Pessoa.Pessoa;
-import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
 import com.passGenerator.PassGenarator.Pessoa.PessoaService;
-import com.passGenerator.PassGenarator.protocolo.Protocolo;
+
 import com.passGenerator.PassGenarator.protocolo.ProtocoloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
+
 import java.util.Optional;
 
 @Service

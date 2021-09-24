@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import antlr.collections.List;
-import com.passGenerator.PassGenarator.protocolo.TipoProtocolo;
 
 @Entity
 @Table
@@ -19,11 +17,11 @@ public class Cartorio {
     }
 
     public String getNomeCartorio() {
-        return nomeCartorio;
+        return this.nomeCartorio;
     }
 
     public String getCodigoCartorio() {
-        return codigoCartorio;
+        return this.codigoCartorio;
     }
 
     private String nomeCartorio;
@@ -34,12 +32,12 @@ public class Cartorio {
 
     public Cartorio(String nomeCartorio, String codigoCartorio) {
         this.nomeCartorio = nomeCartorio;
-        codigoCartorio = codigoCartorio;
+        this.codigoCartorio = codigoCartorio;
     }
 
     public Cartorio(Long id, String nomeCartorio, String codigoCartorio) {
         this.id = id;
         this.nomeCartorio = nomeCartorio;
-        codigoCartorio = codigoCartorio;
+        this.codigoCartorio = codigoCartorio;
     }
 }
