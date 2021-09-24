@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface CartorioRepository extends JpaRepository<Cartorio,Long> {
 
     Optional<Cartorio> findCartorioByNomeCartorio(String nome);
+    Optional<Cartorio> findById(Long id);
 
 }
