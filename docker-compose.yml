@@ -1,20 +1,33 @@
 version: "3.1"
 services:
+  dbpostgresql:
+    container_name: dbpostgresql
+    image: postgres
+    networks:
+      - some_net
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=mydb
   be:
     container_name: backend
     image: be
-    networks: 
+    networks:
       - some_net
     ports:
       - "8081:8081"
+    depends_on:
+      - dbpostgresql
   fe:
     container_name: frontend
     image: fe
-    networks: 
+    networks:
       - some_net
     ports:
       - "8080:8080"
-    depends_on: 
+    depends_on:
       - be
 networks:
   some_net:
