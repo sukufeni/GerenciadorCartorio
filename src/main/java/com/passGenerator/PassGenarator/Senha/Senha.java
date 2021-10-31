@@ -1,6 +1,5 @@
 package com.passGenerator.PassGenarator.Senha;
 
-import com.passGenerator.PassGenarator.Pessoa.Pessoa;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;

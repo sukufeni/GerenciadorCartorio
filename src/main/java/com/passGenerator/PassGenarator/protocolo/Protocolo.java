@@ -3,7 +3,6 @@ package com.passGenerator.PassGenarator.protocolo;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Stack;
 
 @Entity
 @Table
