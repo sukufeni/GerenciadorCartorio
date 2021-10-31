@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo "Building DB image"
-docker buildx build -f src/DB/docker/Dockerfile -t dbpostgresql --platform linux/amd64 ./src/DB/
+# echo "Building DB image"
+# docker buildx build -f src/DB/docker/Dockerfile -t dbpostgresql --platform linux/amd64 ./src/DB/
 
 echo "Removing old .jar file"
 rm src/main/docker/PassGenarator-0.0.1-SNAPSHOT.jar
