@@ -1,16 +1,5 @@
 version: "3.1"
 services:
-  dbpostgresql:
-    container_name: dbpostgresql
-    image: postgres
-    networks:
-      - some_net
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=mydb
   be:
     container_name: backend
     image: be
