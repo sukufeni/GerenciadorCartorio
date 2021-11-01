@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PessoaComponent } from './pessoa/pessoa.component';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { PessoaService } from "./pessoa/pessoa.service";
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ProtocoloComponent } from './protocolo/protocolo.component';
@@ -30,7 +31,8 @@ import { WrongRouteComponent } from './wrong-route/wrong-route.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {
