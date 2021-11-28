@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface ProtocoloRepository extends JpaRepository<Protocolo, Long> {
 
-    public Optional<Protocolo> findProtocoloByTitularProtocolo(String idPessoa);
+    public Optional<Protocolo> findProtocoloByTitularProtocolo(Long long1);
 
-    public Optional<Protocolo> findProtocoloByQualidadeProtocolo(String qualidadeProtocolo);
+    public Protocolo findProtocoloByQualidadeProtocolo(String qualidadeProtocolo);
 
     public Optional<Protocolo> findProtocoloById(Long id);
 

@@ -45,7 +45,8 @@ public class Protocolo implements Serializable {
     public Long getCartorio() {
         return cartorio;
     }
-
+    
+    // Refatorar para lista
     public String getQualidadeProtocolo() {
         return qualidadeProtocolo;
     }
@@ -57,12 +58,12 @@ public class Protocolo implements Serializable {
     public Protocolo() {
     }
 
-    public Protocolo(Protocolo entrada, Long cartorio) {
+    public Protocolo(Protocolo clone, Long cartorio) {
         this.dataCriacao = LocalDate.now();
-        this.dataEntrega = entrada.dataEntrega;
-        this.titularProtocolo = entrada.getTitularProtocolo();
+        this.dataEntrega = clone.dataEntrega;
+        this.titularProtocolo = clone.getTitularProtocolo();
         this.cartorio = cartorio;
-        this.qualidadeProtocolo = entrada.qualidadeProtocolo;
+        this.qualidadeProtocolo = clone.qualidadeProtocolo;
         this.excluido = false;
     }
 

@@ -4,8 +4,13 @@ import com.passGenerator.PassGenarator.Cartorio.Cartorio;
 import com.passGenerator.PassGenarator.Cartorio.CartorioRepository;
 import com.passGenerator.PassGenarator.Pessoa.Pessoa;
 import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
+
+import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import antlr.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
@@ -77,17 +82,17 @@ public class ProtocoloService {
     }
 
     public Protocolo getProtocoloByPessoa(String idPessoa) {
-        Optional<Protocolo> protocolo = this.repository.findProtocoloByTitularProtocolo(idPessoa);
+        Optional<Protocolo> protocolo = this.repository.findProtocoloByTitularProtocolo(Long.parseLong(idPessoa));
         if (!protocolo.isPresent())
             throw new IllegalStateException("Protocolo não encontrado!");
         return protocolo.get();
     }
 
     public Protocolo getProtocoloByQualidade(String qualidadeProtocolo) {
-        Optional<Protocolo> protocolo = this.repository.findProtocoloByQualidadeProtocolo(qualidadeProtocolo);
-        if (!protocolo.isPresent())
+        Protocolo protocolo = this.repository.findProtocoloByQualidadeProtocolo(qualidadeProtocolo);
+        if (null == protocolo)
             throw new IllegalStateException("Protocolo não encontrado!");
-        return protocolo.get();
+        return protocolo;
     }
 
     public boolean disableProtocolo(Long idProtocolo, String observacao) {

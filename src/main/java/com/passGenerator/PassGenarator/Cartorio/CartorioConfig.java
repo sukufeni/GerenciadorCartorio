@@ -12,7 +12,7 @@ public class CartorioConfig {
 
     @Bean
     CommandLineRunner commandLineRunner(CartorioRepository repository) {
-
+// Convert into yml file
         return args -> {
             Cartorio notas = new Cartorio(Long.parseLong("1"), "Tabelionato de Notas", "01.508-1/0867-");
             Cartorio Titulos = new Cartorio(Long.parseLong("2"), "Protesto de Titulos", "01.508-1/0867-");
