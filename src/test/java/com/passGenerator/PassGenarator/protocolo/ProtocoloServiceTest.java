@@ -71,9 +71,6 @@ public class ProtocoloServiceTest {
     @Test
     void canImprimirProtocolos() {
         // given
-        // List.of(new Protocolo(LocalDate.of(2021, 2, 1), 2L, 2L, "Testamento"),
-        // new Protocolo(LocalDate.of(2020, 2, 1), 2L, 2L, "Testamento"),
-        // dummyProtocolo)
         ArrayList<Protocolo> testList = new ArrayList<Protocolo>();
         testList.addAll(List.of(new Protocolo(LocalDate.of(2021, 2, 1), 1L, 1L, "Testamento"),
                 new Protocolo(LocalDate.of(2020, 2, 1), 2L, 2L, "Testamento"), dummyProtocolo));
@@ -86,6 +83,7 @@ public class ProtocoloServiceTest {
         // then
         // should be called
         verify(pRepository).findByDataCriacao(any());
+        
         // valid from the given parameter and mock
         assertEquals(2, ret.size());
     }
