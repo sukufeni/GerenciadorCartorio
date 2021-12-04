@@ -33,9 +33,9 @@ public class PessoaService {
     }
 
     public Pessoa addPessoa(Pessoa pessoa) {
-        Optional<Pessoa> pessoaCpf = pessoaRepository.findByCpf(pessoa.getCPF());
-        if(pessoaCpf.isPresent()){
-           return pessoaCpf.get();
+        Optional<Pessoa> retPessoa = pessoaRepository.findByCpf(pessoa.getCPF());
+        if(retPessoa.isPresent()){
+           return retPessoa.get();
         }
         if (!pessoa.isEmailValid()){
             throw new IllegalStateException("e-mail invalido");
