@@ -7,6 +7,7 @@ import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
 
 import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.number.money.CurrencyUnitFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProtocoloService {
@@ -41,9 +44,14 @@ public class ProtocoloService {
         return this.repository.findProtocolosActive();
     }
 
-    public Object imprimirProtocolos(String idCartorio) {
-        return this.repository.findByDataCriacao(LocalDate.now()).get().stream()
-                .filter(o -> o.getCartorio() == Long.parseLong(idCartorio)).toArray();
+    public List<Protocolo> imprimirProtocolos(String idCartorio) {
+        final Optional<ArrayList<Protocolo>> currentDateProtocolos = this.repository.findByDataCriacao(LocalDate.now());
+        if (!currentDateProtocolos.isEmpty()) {
+            return currentDateProtocolos.get().stream()
+                    .filter(o -> o.getCartorio() == Long.parseLong(idCartorio)).collect(Collectors.toList());
+        } else {
+            throw new NoSuchElementException("Erro ao encontrar Protocolos para a data Selecionada!");
+        }
     }
 
     public ByteArrayInputStream imprimirProtocoloDetalhado(String idProtocolo) {
@@ -61,7 +69,7 @@ public class ProtocoloService {
 
     public List<String> getTipoProtocolos() {
         List<String> auxKeysProtocolos = new ArrayList<String>();
-        for (Map<String, Long> iterable : TipoProtocolo.tipoProtocolo) {
+        for (Map<String, Long> iterable : TiposProtocolos.tipoProtocolo) {
             for (String keyString : iterable.keySet()) {
                 auxKeysProtocolos.add(keyString);
             }
@@ -71,7 +79,7 @@ public class ProtocoloService {
 
     public Protocolo gerarProtocolo(Protocolo protocolo) {
         Long idCartorio = -1L;
-        for (Map<String, Long> curr : TipoProtocolo.tipoProtocolo) {
+        for (Map<String, Long> curr : TiposProtocolos.tipoProtocolo) {
             if (curr.containsKey(protocolo.getQualidadeProtocolo())) {
                 idCartorio = curr.get(protocolo.getQualidadeProtocolo());
                 break;

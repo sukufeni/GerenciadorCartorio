@@ -3,7 +3,8 @@ package com.passGenerator.PassGenarator.protocolo;
 import java.util.List;
 import java.util.Map;
 
-public final class TipoProtocolo {
+// Convert to yml
+public final class TiposProtocolos {
     
     public static List<Map<String,Long>>tipoProtocolo = List.of(
 

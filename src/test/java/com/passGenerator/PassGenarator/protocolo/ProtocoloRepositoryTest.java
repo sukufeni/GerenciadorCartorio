@@ -25,7 +25,7 @@ public class ProtocoloRepositoryTest {
     private Protocolo dummyProtocolo = new Protocolo(LocalDate.now(), 2L, 2L, "Testamento");
 
     @Test
-    void findProtocoloByQualidade() {
+    void findProtocoloByQualidadeProtocolo() {
         // given
         assertNotNull(pRepository);
         pRepository.save(dummyProtocolo);
@@ -38,29 +38,41 @@ public class ProtocoloRepositoryTest {
     }
 
     @Test
-    void findProtocoloByTitular() {
+    void findProtocoloByTitularProtocolo() {
+        // given
         assertNotNull(pRepository);
         pRepository.save(dummyProtocolo);
+        
+        // when
         Optional retProtocolo = pRepository.findProtocoloByTitularProtocolo(dummyProtocolo.getTitularProtocolo());
+
+        // then
         assertTrue(retProtocolo.isPresent());
     }
 
     @Test
     void findProtocoloByDataCriacao() {
+        // given
         assertNotNull(pRepository);
         pRepository.save(dummyProtocolo);
+        // when
         Optional retoProtocolo = pRepository.findByDataCriacao(dummyProtocolo.getDataCriacao());
+
+        // then
         assertTrue(retoProtocolo.isPresent());
     }
 
     @Test
     void findProtocolosActive() {
+        // given
         assertNotNull(pRepository);
         List<Protocolo> dummies = List.of(dummyProtocolo, dummyProtocolo, dummyProtocolo);
         pRepository.saveAll(dummies);
 
+        // when
         List<Protocolo> rProtocolos = pRepository.findProtocolosActive();
-
+        
+        // then
         assertFalse(rProtocolos.isEmpty());
     }
 }

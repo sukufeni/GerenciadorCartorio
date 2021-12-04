@@ -1,15 +1,26 @@
 package com.passGenerator.PassGenarator.protocolo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import com.passGenerator.PassGenarator.Cartorio.CartorioRepository;
 import com.passGenerator.PassGenarator.Pessoa.PessoaRepository;
@@ -40,8 +51,7 @@ public class ProtocoloServiceTest {
     CartorioRepository cartorioRepository;
 
     ProtocoloService pService;
-    AutoCloseable auto;
-    Protocolo dummyProtocolo = new Protocolo(LocalDate.now(), 2L, 2L, "Testamento");
+    private final Protocolo dummyProtocolo = new Protocolo(LocalDate.now(), 2L, 2L, "Testamento");
 
     @BeforeEach
     void setup() {
@@ -59,13 +69,53 @@ public class ProtocoloServiceTest {
     }
 
     @Test
+    void canImprimirProtocolos() {
+        // given
+        // List.of(new Protocolo(LocalDate.of(2021, 2, 1), 2L, 2L, "Testamento"),
+        // new Protocolo(LocalDate.of(2020, 2, 1), 2L, 2L, "Testamento"),
+        // dummyProtocolo)
+        ArrayList<Protocolo> testList = new ArrayList<Protocolo>();
+        testList.addAll(List.of(new Protocolo(LocalDate.of(2021, 2, 1), 1L, 1L, "Testamento"),
+                new Protocolo(LocalDate.of(2020, 2, 1), 2L, 2L, "Testamento"), dummyProtocolo));
+        final Optional<ArrayList<Protocolo>> underTest = Optional.of(testList);
+
+        // when
+        when(pRepository.findByDataCriacao(any())).thenReturn(underTest);
+        final List<Protocolo> ret = pService.imprimirProtocolos("2");
+
+        // then
+        // should be called
+        verify(pRepository).findByDataCriacao(any());
+        // valid from the given parameter and mock
+        assertEquals(2, ret.size());
+    }
+
+    @Test
+    void canTImprimirProtocolos() {
+        // given
+        final Optional<ArrayList<Protocolo>> underTest = Optional.empty();
+
+        // when
+        when(pRepository.findByDataCriacao(any())).thenReturn(underTest);
+
+        // then
+        // Expected to be an error
+        assertThrows(NoSuchElementException.class, () -> {
+            pService.imprimirProtocolos("2");
+        }, "Erro ao encontrar Protocolos para a data Selecionada!");
+
+        // expected to be called anyway
+        verify(pRepository).findByDataCriacao(any());
+    }
+
+    @Test
     void canGetProtocolos() {
         pService.getProtocolos();
         verify(pRepository).findProtocolosActive();
     }
 
     @Test
-    void canFetchTiposProtocolos() {
+    void canGetTiposProtocolos() {
         var ret = pService.getTipoProtocolos();
 
         // should return a list with the types
@@ -87,8 +137,21 @@ public class ProtocoloServiceTest {
         // when
         when(pRepository.findProtocoloByQualidadeProtocolo(any())).thenReturn(dummyProtocolo);
         pService.getProtocoloByQualidade("Testamento");
-        
+
         // then
         verify(pRepository).findProtocoloByQualidadeProtocolo(any());
+    }
+
+    @Test
+    void findProtocoloByPessoa(){
+        // when
+        when(pRepository.findProtocoloByTitularProtocolo(anyLong())).thenReturn(Optional.of(dummyProtocolo));
+        final Protocolo ret = pService.getProtocoloByPessoa("2");
+
+        // then
+        verify(pRepository).findProtocoloByTitularProtocolo(anyLong());
+        assertEquals(ret, dummyProtocolo);
+
+
     }
 }
